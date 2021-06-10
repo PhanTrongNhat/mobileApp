@@ -5,7 +5,10 @@ import { StyleSheet, Text, View, FlatList, Button,TouchableOpacity
 import axios from 'axios';
 import Item from '../components/item';
 import { Ionicons } from '@expo/vector-icons';
-export default function products(props) {
+
+import {connect} from 'react-redux';
+
+export default connect()( function products(props) {
   const [data,setData] = useState([]);
   const [colums,setColums] = useState(2);
   useEffect(()=>{        
@@ -68,7 +71,7 @@ export default function products(props) {
    
    
   );
-}
+})
 
 const styles = StyleSheet.create({
   container: {
