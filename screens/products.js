@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React,{useEffect, useState, useLayoutEffect} from 'react';
-import { StyleSheet, Text, View, FlatList, Button,TouchableOpacity
+import { StyleSheet, Text, View, FlatList, Button,TouchableOpacity, TextInput
  } from 'react-native';
 import axios from 'axios';
 import Item from '../components/item';
@@ -20,12 +20,16 @@ import {getLengthCart} from '../redux/cart';
  function products({name,navigation}) {
   const products = useSelector(state => state.products.products);
   const length = useSelector(state => state.cart.items.length);
+  const [colums,setColums] = useState(2);
+  const [productsFilter, setProductsFilter] = useState(products);
+
+  let filter;
   const dispatch = useDispatch();
   useEffect(() => {
    dispatch(fetchData());
   }, []); 
 
-  const [colums,setColums] = useState(2);
+ 
   useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
@@ -43,14 +47,24 @@ import {getLengthCart} from '../redux/cart';
       setColums(2);
     }
   }
-  // console.log( products);
+  //console.log( productsFilter);
   // console.log('-------------------------------');
+  useEffect(() => {
+    setProductsFilter(products)
+  }, [products])
+  const filterProduct = (element)=>{
+    filter = products.filter(item=>
+      item.name.includes(element)
+    )
+    setProductsFilter(filter);
+  }
   return (
     <View>
         <Button title={colums===1?'listView':'gridView'} onPress={changView}></Button>
-        
+        <TextInput onChangeText={text=>filterProduct(text)}></TextInput>
+       
           <FlatList 
-            data= {products}
+            data= {productsFilter}
             key = {colums}
             numColumns = {colums}
             renderItem={({item})=>

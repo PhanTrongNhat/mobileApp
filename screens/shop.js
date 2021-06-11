@@ -16,8 +16,11 @@ export default function shop(props) {
   useLayoutEffect(() => {
     props.navigation.setOptions({
       headerRight: () => (
-        //<Ionicons name="home" size={20} color="black" />
-        <Text>{length}</Text>
+        <View >
+          <Ionicons name="cart" size={20} color="black" />
+          <Text>{length}</Text>
+        </View>
+     
       ),
       title:props.title
     });
