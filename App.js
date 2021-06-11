@@ -27,11 +27,6 @@ export default function App() {
   return (
     <Provider store={store}>
       <NavigationContainer>
-        <Header
-          leftComponent={{ icon: "menu", color: "#fff" }}
-          centerComponent={{ text: "MY", style: { color: "#fff" } }}
-          rightComponent={{ icon: "home", color: "#fff" }}
-        />
         <Tab.Navigator
           screenOptions={({ route }) => ({
             tabBarIcon: ({ focused, color, size }) => {

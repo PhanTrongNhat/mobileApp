@@ -7,32 +7,34 @@ import Item from '../components/item';
 import { Ionicons } from '@expo/vector-icons';
 
 import {connect} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
+import { fetchData, setData } from '../redux/products';
+import {getLengthCart} from '../redux/cart';
 
-export default connect()( function products(props) {
-  const [data,setData] = useState([]);
+// import { createSelector } from 'reselect'
+
+// const selectNumCompletedTodos = createSelector(
+//       state => state.products,()=>{}
+// );
+
+ function products({name,navigation}) {
+  const products = useSelector(state => state.products.products);
+  const length = useSelector(state => state.cart.items.length);
+  const dispatch = useDispatch();
+  useEffect(() => {
+   dispatch(fetchData());
+  }, []); 
+
   const [colums,setColums] = useState(2);
-  useEffect(()=>{        
-        axios.get("https://2g8ge.sse.codesandbox.io/products").then((res)=>{
-          setData(res.data);
-          console.log('data loaded!');
-        }).catch(err=>{
-          console.log(err);
-        })
-       },[]);
   useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
-        <Ionicons name="home" size={20} color="black" />
+        //<Ionicons name="home" size={20} color="black" />
+        <Text>{length}</Text>
       ),
-      title:props.name
+      title:name
     });
-  }, []);
-  useEffect(()=>{        
-    
-   },[colums]);
-  
-  const products = data;
-  const {navigation} = props;
+  }, [length]);
  
   function changView(){
     if(colums === 2){
@@ -41,7 +43,8 @@ export default connect()( function products(props) {
       setColums(2);
     }
   }
-  
+  // console.log( products);
+  // console.log('-------------------------------');
   return (
     <View>
         <Button title={colums===1?'listView':'gridView'} onPress={changView}></Button>
@@ -53,25 +56,18 @@ export default connect()( function products(props) {
             renderItem={({item})=>
               <View style={styles.warrap}>
                  <Item categori={item}
-                  onPress = {()=>navigation.navigate('DETAIL',{name:item.name})
-                  
+                  onPress = {()=>navigation.navigate('DETAIL',{item:item})          
                 }
-              />
-             
+              />      
               </View>
              
             }
             
             keyExtractor={item=>`${item.id}`}
         />
-    </View>
-     
- 
-
-   
-   
+    </View>  
   );
-})
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -85,3 +81,5 @@ const styles = StyleSheet.create({
     flex:1
   }
 });
+
+export default products;

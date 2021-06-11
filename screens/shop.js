@@ -1,22 +1,30 @@
 
-import React,{useState, useLayoutEffect} from 'react';
+import React,{useState, useLayoutEffect, useEffect} from 'react';
 import { StyleSheet, Text, View, Button
  } from 'react-native';
 import Item from '../components/item';
 import { Ionicons } from '@expo/vector-icons';
+import {useDispatch, useSelector} from 'react-redux'
+import {} from '../redux/cart';
+
 export default function shop(props) {
+   const length= useSelector(state => state.cart.items.length);
+  // const dispatch = useDispatch();
+  // useEffect(() => {
+  //   length1 = dispatch(getLengthCart());
+  // }, [length1]);
   useLayoutEffect(() => {
     props.navigation.setOptions({
       headerRight: () => (
-        <Ionicons name="home" size={20} color="black" />
+        //<Ionicons name="home" size={20} color="black" />
+        <Text>{length}</Text>
       ),
       title:props.title
     });
-  }, []);
+  }, [length]);
   return (
     <View>
         <Text>Shop</Text>
-      
     </View>
    
   );
