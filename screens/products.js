@@ -61,7 +61,7 @@ import {getLengthCart} from '../redux/cart';
   return (
     <View>
         <Button title={colums===1?'listView':'gridView'} onPress={changView}></Button>
-        <TextInput onChangeText={text=>filterProduct(text)}></TextInput>
+        <TextInput onChangeText={text=>filterProduct(text)} placeholder="input search"></TextInput>
        
           <FlatList 
             data= {productsFilter}
@@ -70,9 +70,10 @@ import {getLengthCart} from '../redux/cart';
             renderItem={({item})=>
               <View style={styles.warrap}>
                  <Item categori={item}
-                  onPress = {()=>navigation.navigate('DETAIL',{item:item})          
-                }
-              />      
+                    onPress = {
+                      ()=>navigation.navigate('DETAIL',{item:item})          
+                    }
+                />      
               </View>
              
             }

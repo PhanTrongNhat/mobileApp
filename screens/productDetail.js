@@ -7,17 +7,19 @@ import {useSelector, useDispatch} from 'react-redux';
 import {setCart,getLengthCart} from '../redux/cart';
 
 export default function productDetail(props) {
-  const length = useSelector(state => state.cart.items.length);
+  const length = useSelector(state => state.cart.count);
   const dispatch = useDispatch();
  useEffect(() => {
  
  },[length]);
   const { navigation } = props;
   const {item} = props.route.params;
-  console.log(item);
+  //console.log(item);
   const [image,setImage] = useState('');
   let src ='../assets/wardrobe.png';
 const addItem = () =>{
+  
+  //item.id = length + 1;
   dispatch(setCart(item));
 }
   
