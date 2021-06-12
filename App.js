@@ -1,5 +1,5 @@
 import { StatusBar } from "expo-status-bar";
-import React from "react";
+import React,{useEffect,useState} from "react";
 import { StyleSheet } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
@@ -19,13 +19,25 @@ import secure from "./screens/signInScreen";
 
 import { Provider } from "react-redux";
 import store from "./redux/store";
+//splash
 
+import SplashScreen from  './screens/splashScreen'
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
 export default function App() {
+  const [flag,setFlag] = useState(true);
+  useEffect(()=>{
+    setTimeout(() => {
+      setFlag(false);
+    }, 3000);
+  });
+ 
+  
   return (
+    (flag?<SplashScreen/>:
     <Provider store={store}>
+      
       <NavigationContainer>
         <Tab.Navigator
           screenOptions={({ route }) => ({
@@ -61,7 +73,7 @@ export default function App() {
           <Tab.Screen name="secure" component={secure} />
         </Tab.Navigator>
       </NavigationContainer>
-    </Provider>
+    </Provider>)
   );
 }
 

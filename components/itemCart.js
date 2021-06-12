@@ -1,7 +1,7 @@
 import React from 'react'
 import {View, Image, Text, StyleSheet, Alert,TouchableOpacity, Button } from 'react-native'
 import product from '../assets/wardrobe.png'
-export default function( {item,onPress}){
+export default function( {item,onPress, onPressSetCart}){
     
     return (
     <TouchableOpacity activeOpacity={0.5} >
@@ -11,7 +11,9 @@ export default function( {item,onPress}){
             <Text >Count:{item.count}</Text>
             <Text style={style.cost}>Cost:{item.cost}$</Text>
             <Text >Total:{item.count * item.cost}$</Text>
+            
             <Button title="delete" onPress={onPress}></Button>
+            <Button title="add" onPress={onPressSetCart}></Button>
         </View>
     </TouchableOpacity>)
     ;

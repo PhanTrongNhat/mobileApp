@@ -1,12 +1,12 @@
 
 import React,{useState, useLayoutEffect, useEffect} from 'react';
-import { StyleSheet, Text, View, Button, FlatList
+import { StyleSheet, Text, View, Button, FlatList, ScrollView
  } from 'react-native';
 
 import { Ionicons } from '@expo/vector-icons';
 
 import { useSelector,useDispatch} from 'react-redux';
-import {deleteItem} from '../redux/cart';
+import {deleteItem, setCart} from '../redux/cart';
 //import itemCart from '../components/itemCart';
 import ItemCart from '../components/itemCart';
 import Item from '../components/item';
@@ -31,6 +31,9 @@ export default function cart({navigation, title}) {
   const deleteI = (item)=>{
     dispatch(deleteItem(item));
   }
+  const addItem = (item)=>{
+    dispatch(setCart(item));
+  }
   console.log(items);
   return (
     
@@ -50,20 +53,24 @@ export default function cart({navigation, title}) {
             
             keyExtractor={item=>`${item.id}`}
         /> */}
+        <ScrollView>
         <FlatList 
             data = {items}
             renderItem ={({item})=>
                 <ItemCart
                   item ={item}
                   onPress = {()=>deleteI(item.id)}
+                  onPressSetCart = {()=>addItem(item)}
                 />
               
             }
             keyExtractor={item=>`${item.id}`}
          />
 
-       
+        <Text >-----------------------------------------------------------------------------</Text>
         <Text style={styles.total}>Total:{total}$</Text>
+        </ScrollView>
+        
       
     </View>)
    
