@@ -1,44 +1,51 @@
+import React, { useState, useLayoutEffect, useEffect } from "react";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Button,
+  FlatList,
+  ScrollView,
+} from "react-native";
 
-import React,{useState, useLayoutEffect, useEffect} from 'react';
-import { StyleSheet, Text, View, Button, FlatList, ScrollView
- } from 'react-native';
+import { Ionicons } from "@expo/vector-icons";
 
-import { Ionicons } from '@expo/vector-icons';
-
-import { useSelector,useDispatch} from 'react-redux';
-import {deleteItem, setCart} from '../redux/cart';
+import { useSelector, useDispatch } from "react-redux";
+import { deleteItem, setCart, getData, setDATA } from "../redux/cart";
 //import itemCart from '../components/itemCart';
-import ItemCart from '../components/itemCart';
-import Item from '../components/item';
-import { Colors } from 'react-native/Libraries/NewAppScreen';
-export default function cart({navigation, title}) {
-  const length = useSelector(state => state.cart.count);
-  const total = useSelector(state => state.cart.total);
-  const items = useSelector(state => state.cart.items);
+import ItemCart from "../components/itemCart";
+import Item from "../components/item";
+import { Colors } from "react-native/Libraries/NewAppScreen";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
+export default function cart({ navigation, title }) {
+  const length = useSelector((state) => state.cart.count);
+  const total = useSelector((state) => state.cart.total);
+  const items = useSelector((state) => state.cart.items);
+
   const dispatch = useDispatch();
-  useEffect(() => {
-    //console.log(items);
-  }, [items])
+  dispatch(getData());
+
+  useEffect(() => {}, [items]);
   useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
         //<Ionicons name="home" size={20} color="black" />
         <Text>{length}</Text>
       ),
-      title:title
+      title: title,
     });
   }, [length]);
-  const deleteI = (item)=>{
+  const deleteI = (item) => {
     dispatch(deleteItem(item));
-  }
-  const addItem = (item)=>{
+  };
+  const addItem = (item) => {
     dispatch(setCart(item));
-  }
-  console.log(items);
+  };
+  // console.log(items);
   return (
-    
     <View>
-{/*         
+      {/*         
         <FlatList 
             data= {items}
            
@@ -53,39 +60,39 @@ export default function cart({navigation, title}) {
             
             keyExtractor={item=>`${item.id}`}
         /> */}
-        <ScrollView>
-        <FlatList 
-            data = {items}
-            renderItem ={({item})=>
-                <ItemCart
-                  item ={item}
-                  onPress = {()=>deleteI(item.id)}
-                  onPressSetCart = {()=>addItem(item)}
-                />
-              
-            }
-            keyExtractor={item=>`${item.id}`}
-         />
+      <ScrollView>
+        <FlatList
+          data={items}
+          renderItem={({ item }) => (
+            <ItemCart
+              item={item}
+              onPress={() => deleteI(item.id)}
+              onPressSetCart={() => addItem(item)}
+            />
+          )}
+          keyExtractor={(item) => `${item.id}`}
+        />
 
-        <Text >-----------------------------------------------------------------------------</Text>
+        <Text>
+          -----------------------------------------------------------------------------
+        </Text>
+        <Text style={styles.total}>count:{length}$</Text>
         <Text style={styles.total}>Total:{total}$</Text>
-        </ScrollView>
         
-      
-    </View>)
-   
-  
+      </ScrollView>
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: "stretch",
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
   },
-  total:{
-    color: "red"
-  }
+  total: {
+    color: "red",
+  },
 });

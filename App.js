@@ -1,5 +1,5 @@
 import { StatusBar } from "expo-status-bar";
-import React,{useEffect,useState} from "react";
+import React, { useEffect, useState } from "react";
 import { StyleSheet } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
@@ -13,7 +13,6 @@ import * as SecureStore from "expo-secure-store";
 import homeStack from "./stackNavigation/homeStack.js";
 import wishlistStack from "./stackNavigation/wishlistStack.js";
 import meStack from "./stackNavigation/meStack.js";
-import shopStack from "./stackNavigation/shopStack.js";
 import cartStack from "./stackNavigation/cartStack.js";
 import secure from "./screens/signInScreen";
 
@@ -21,23 +20,22 @@ import { Provider } from "react-redux";
 import store from "./redux/store";
 //splash
 
-import SplashScreen from  './screens/splashScreen'
+import SplashScreen from "./screens/splashScreen";
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
 export default function App() {
-  const [flag,setFlag] = useState(true);
-  useEffect(()=>{
+  const [flag, setFlag] = useState(true);
+  useEffect(() => {
     setTimeout(() => {
       setFlag(false);
     }, 3000);
   });
- 
-  
-  return (
-    (flag?<SplashScreen/>:
+
+  return flag ? (
+    <SplashScreen />
+  ) : (
     <Provider store={store}>
-      
       <NavigationContainer>
         <Tab.Navigator
           screenOptions={({ route }) => ({
@@ -46,8 +44,6 @@ export default function App() {
 
               if (route.name === "home") {
                 iconName = focused ? "home" : "home-outline";
-              } else if (route.name === "shop") {
-                iconName = focused ? "search" : "search-outline";
               } else if (route.name === "wishlist") {
                 iconName = focused ? "heart" : "heart-outline";
               } else if (route.name === "cart") {
@@ -66,14 +62,13 @@ export default function App() {
           }}
         >
           <Tab.Screen name="home" component={homeStack} />
-          <Tab.Screen name="shop" component={shopStack} />
+
           <Tab.Screen name="wishlist" component={wishlistStack} />
           <Tab.Screen name="cart" component={cartStack} />
           <Tab.Screen name="me" component={meStack} />
-          <Tab.Screen name="secure" component={secure} />
         </Tab.Navigator>
       </NavigationContainer>
-    </Provider>)
+    </Provider>
   );
 }
 
