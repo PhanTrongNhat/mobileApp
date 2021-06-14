@@ -11,7 +11,7 @@ import {
 import { Ionicons } from "@expo/vector-icons";
 
 import { useSelector, useDispatch } from "react-redux";
-import { deleteItem, setCart, getData, setDATA,loadData } from "../redux/cart";
+import { deleteItem, setCart, getData, setDATA,loadData ,reduceItem} from "../redux/cart";
 //import itemCart from '../components/itemCart';
 import ItemCart from "../components/itemCart";
 import Item from "../components/item";
@@ -24,7 +24,7 @@ export default function cart({ navigation, title }) {
   const length = useSelector((state) => state.cart.count);
   const total = useSelector((state) => state.cart.total);
   const items = useSelector((state) => state.cart.items);
-  
+
   useEffect(() => {}, [items]);
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -35,12 +35,15 @@ export default function cart({ navigation, title }) {
       title: title,
     });
   }, [length]);
-  const deleteI = (item) => {
-    dispatch(deleteItem(item));
+  const deleteI = (id) => {
+    dispatch(deleteItem(id));
   };
   const addItem = (item) => {
     dispatch(setCart(item));
   };
+  const reduce = (id)=>{
+    dispatch(reduceItem(id));
+  }
   // console.log(items);
   return (
     <View>
@@ -67,6 +70,8 @@ export default function cart({ navigation, title }) {
               item={item}
               onPress={() => deleteI(item.id)}
               onPressSetCart={() => addItem(item)}
+              onPressReduce ={()=> reduce(item.id)}
+
             />
           )}
           keyExtractor={(item) => `${item.id}`}

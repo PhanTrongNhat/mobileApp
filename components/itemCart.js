@@ -9,7 +9,7 @@ import {
   Button,
 } from "react-native";
 import product from "../assets/wardrobe.png";
-export default function ({ item, onPress, onPressSetCart }) {
+export default function ({ item, onPress, onPressSetCart, onPressReduce }) {
   return (
     <TouchableOpacity activeOpacity={0.5}>
       <View style={style.container}>
@@ -22,9 +22,10 @@ export default function ({ item, onPress, onPressSetCart }) {
           <Text style={style.cost}>Cost:{item.cost}$</Text>
           <Text>Total:{item.count * item.cost}$</Text>
           <View style={style.button}>
-            <Button title="delete"  onPress={onPress}></Button>
-            <Button title="add" onPress={onPressSetCart}></Button>
+            <Button title="-"  onPress={onPressReduce}></Button>
+            <Button title="+" onPress={onPressSetCart}></Button>
           </View>
+          <Button title="delete"onPress={onPress}></Button>
         </View>
       </View>
     </TouchableOpacity>

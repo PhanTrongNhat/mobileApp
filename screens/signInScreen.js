@@ -3,14 +3,16 @@ import { StyleSheet, Text, View, Button, TextInput } from "react-native";
 import Item from "../components/item";
 import { Ionicons } from "@expo/vector-icons";
 import { useDispatch, useSelector } from "react-redux";
-import { signIn } from "../redux/auth";
+import { signIn, loadData} from "../redux/auth";
 
 export default function signInScreen({ navigation }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
   const dispatch = useDispatch();
-
+  useEffect(() => {
+   dispatch(loadData());
+  }, []);
   const submit = (infor) => {
     dispatch(signIn(infor));
   };
