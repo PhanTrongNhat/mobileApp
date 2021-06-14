@@ -10,7 +10,17 @@ const Stack = createStackNavigator();
 
 export default function shopStack(props) {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator
+      screenOptions={{
+        headerStyle: {
+          
+        },
+        headerTintColor: "black",
+        headerTitleStyle: {
+          fontWeight: "bold",
+        },
+      }}
+    >
       <Stack.Screen name="SHOP" component={shop} />
     </Stack.Navigator>
   );

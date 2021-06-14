@@ -10,7 +10,17 @@ const Stack = createStackNavigator();
 
 export default function cartStack(props) {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator
+      screenOptions={{
+        headerStyle: {
+          
+        },
+        headerTintColor: "black",
+        headerTitleStyle: {
+          fontWeight: "bold",
+        },
+      }}
+    >
       <Stack.Screen name="CART" component={cart} />
     </Stack.Navigator>
   );

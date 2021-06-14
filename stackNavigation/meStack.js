@@ -13,7 +13,17 @@ export default function meStack(props) {
   const sign = useSelector((state) => state.auth.signin);
  
   return (
-    <Stack.Navigator>
+    <Stack.Navigator
+      screenOptions={{
+        headerStyle: {
+          
+        },
+        headerTintColor: "black",
+        headerTitleStyle: {
+          fontWeight: "bold",
+        },
+      }}
+    >
       {sign ? (
         <Stack.Screen name="PROFILE" component={profile} />
       ) : (

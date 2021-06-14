@@ -10,7 +10,17 @@ const Stack = createStackNavigator();
 
 export default function wishlistStack(props) {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator
+      screenOptions={{
+        headerStyle: {
+          
+        },
+        headerTintColor: "black",
+        headerTitleStyle: {
+          fontWeight: "bold",
+        },
+      }}
+    >
       <Stack.Screen
         name="WISHLIST"
         component={wishlist}
