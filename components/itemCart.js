@@ -13,13 +13,19 @@ export default function ({ item, onPress, onPressSetCart }) {
   return (
     <TouchableOpacity activeOpacity={0.5}>
       <View style={style.container}>
-        <Image style={style.image} source={product}></Image>
-        <Text style={style.text}>{item.name}</Text>
-        <Text>Count:{item.count}</Text>
-        <Text style={style.cost}>Cost:{item.cost}$</Text>
-        <Text>Total:{item.count * item.cost}$</Text>
-        <Button title="delete" onPress={onPress}></Button>
-        <Button title="add" onPress={onPressSetCart}></Button>
+        <View style={style.item}>
+          <Text style={style.text}>{item.name}</Text>
+          <Image style={style.image} source={product}></Image>
+        </View>
+        <View style={style.item}>
+          <Text>Count:{item.count}</Text>
+          <Text style={style.cost}>Cost:{item.cost}$</Text>
+          <Text>Total:{item.count * item.cost}$</Text>
+          <View style={style.button}>
+            <Button title="delete"  onPress={onPress}></Button>
+            <Button title="add" onPress={onPressSetCart}></Button>
+          </View>
+        </View>
       </View>
     </TouchableOpacity>
   );
@@ -32,6 +38,8 @@ const style = StyleSheet.create({
     backgroundColor: "#DCDCDC",
     borderRadius: 10,
     flex: 1,
+    justifyContent: "space-around",
+    flexDirection: "row",
     shadowColor: "grey",
     shadowOpacity: 20,
     shadowOffset: { width: 0, height: 0 },
@@ -47,4 +55,13 @@ const style = StyleSheet.create({
   cost: {
     color: "black",
   },
+  item: {
+    alignItems: "center",
+  },
+  button: {
+    alignItems: "center",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignContent: 'space-between'
+  }
 });

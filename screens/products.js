@@ -16,7 +16,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { connect } from "react-redux";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchData, setData } from "../redux/products";
-import { getLengthCart } from "../redux/cart";
+import { getLengthCart, loadData } from "../redux/cart";
 function products({ name, navigation }) {
   const products = useSelector((state) => state.products.products);
   const length = useSelector((state) => state.cart.count);
@@ -25,6 +25,9 @@ function products({ name, navigation }) {
 
   let filter;
   const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(loadData());
+  }, []);
   useEffect(() => {
     dispatch(fetchData());
   }, []);

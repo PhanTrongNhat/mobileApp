@@ -41,8 +41,10 @@ export default function productDetail(props) {
         <Text>{item.name}</Text>
         <Text>{item.cost}</Text>
       </View>
-
-      <Button title="ADD TO CART" onPress={addItem}></Button>
+      <View  style={styles.button}>
+        <Button title="ADD TO CART" onPress={addItem}></Button>
+      </View>
+     
       {/* <Button title="Go back" onPress={() => navigation.goBack()}></Button>
       {/* <Button
         title="push"
@@ -70,4 +72,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     alignItems: "center",
   },
+  button: {
+    alignItems:'center'
+  }
 });

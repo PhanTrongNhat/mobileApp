@@ -11,7 +11,7 @@ import {
 import { Ionicons } from "@expo/vector-icons";
 
 import { useSelector, useDispatch } from "react-redux";
-import { deleteItem, setCart, getData, setDATA } from "../redux/cart";
+import { deleteItem, setCart, getData, setDATA,loadData } from "../redux/cart";
 //import itemCart from '../components/itemCart';
 import ItemCart from "../components/itemCart";
 import Item from "../components/item";
@@ -19,13 +19,12 @@ import { Colors } from "react-native/Libraries/NewAppScreen";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function cart({ navigation, title }) {
+  const dispatch = useDispatch();
+ 
   const length = useSelector((state) => state.cart.count);
   const total = useSelector((state) => state.cart.total);
   const items = useSelector((state) => state.cart.items);
-
-  const dispatch = useDispatch();
-  dispatch(getData());
-
+  
   useEffect(() => {}, [items]);
   useLayoutEffect(() => {
     navigation.setOptions({

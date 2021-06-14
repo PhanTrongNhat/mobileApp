@@ -18,6 +18,8 @@ export const getData = () => {
 };
 export const fetchData = () => async (dispatch) => {
   const res = await axios.get("https://2g8ge.sse.codesandbox.io/products");
+
+
   dispatch({ type: SETDATA, payload: res.data });
 };
 
@@ -28,8 +30,6 @@ const reducer = (state = initState, action) => {
         ...state,
       };
     case SETDATA:
-      //console.log({...state.products,...action.payload});
-
       return {
         ...state,
         products: action.payload,

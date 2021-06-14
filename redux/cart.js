@@ -1,26 +1,38 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import axios from "axios";
 const SETCART = "SETCART";
-const GETDATA = "GETDATA";
+const LOADDATA = "GETDATA";
 const GETLENGTH = "GETLENGTH";
 const DELETEITEM = "DELETEITEM";
-// khởi tạo state
+const setData = async (data) =>
+  await axios
+    .post("https://2g8ge.sse.codesandbox.io/cart", data)
+    .catch((error) => {
+      console.log(error);
+    });
 const initState = {
   items: [],
   total: 0,
   count: 0,
 };
+// const initState = {
+//   items: [],
+//   total: 0,
+//   count: 0,
+// };
 //lấy dữ liệu từ AsyncStorage
 const storeData = async (value) => {
   try {
     const jsonValue = JSON.stringify(value);
-    await AsyncStorage.setItem("state", jsonValue);
+    await AsyncStorage.setItem("cart", jsonValue);
   } catch (e) {
     console.log(e);
   }
 };
+
 const getAsync = async () => {
   try {
-    const jsonValue = await AsyncStorage.getItem("state");
+    const jsonValue = await AsyncStorage.getItem("cart");
     initState = JSON.parse(jsonValue);
 
     return jsonValue != null ? await JSON.parse(jsonValue) : null;
@@ -29,11 +41,9 @@ const getAsync = async () => {
   }
 };
 // action get data
-export const getData = () => {
-  getAsync();
-  return {
-    type: GETDATA,
-  };
+export const loadData = () => async (dispatch) => {
+  const res = await axios.get("https://2g8ge.sse.codesandbox.io/cart");
+  dispatch({ type: LOADDATA, payload: res.data });
 };
 export const setCart = (item) => {
   return {
@@ -56,9 +66,10 @@ export const getLengthCart = () => {
 //reducer
 const reducer = (state = initState, action) => {
   switch (action.type) {
-    case GETDATA:
+    case LOADDATA:
       return {
         ...state,
+        ...action.payload,
       };
     case SETCART:
       //khai báo mảng tạm và biến lưu index sản phẩm trong giỏ hàng
@@ -73,7 +84,8 @@ const reducer = (state = initState, action) => {
         arr.push(action.payload);
         state.count++;
         state.total += action.payload.cost;
-        storeData({ ...state, items: arr });
+        //storeData({ ...state, items: arr });
+        setData({ ...state, items: arr });
         return {
           ...state,
           items: arr,
@@ -83,6 +95,7 @@ const reducer = (state = initState, action) => {
       state.count++;
       state.total += action.payload.cost;
       storeData({ ...state, items: arr });
+      setData({ ...state, items: arr });
       return {
         ...state,
         items: arr,
@@ -95,6 +108,8 @@ const reducer = (state = initState, action) => {
       state.total -= arr[index].cost * arr[index].count;
       state.count -= arr[index].count;
       arr.splice(index, 1);
+      setData({ ...state, items: arr });
+
       return {
         ...state,
         items: arr,
