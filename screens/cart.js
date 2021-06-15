@@ -17,7 +17,7 @@ import ItemCart from "../components/itemCart";
 import Item from "../components/item";
 import { Colors } from "react-native/Libraries/NewAppScreen";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-
+import { Avatar, Badge, Icon, withBadge } from 'react-native-elements'
 export default function cart({ navigation, title }) {
   const dispatch = useDispatch();
  
@@ -26,11 +26,13 @@ export default function cart({ navigation, title }) {
   const items = useSelector((state) => state.cart.items);
 
   useEffect(() => {}, [items]);
+  const BadgedIcon = withBadge(length)(Icon);
   useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
-        //<Ionicons name="home" size={20} color="black" />
-        <Text>{length}</Text>
+        <View style={styles.carticon}>
+          <BadgedIcon type="ionicon" name="cart-outline" />
+        </View>
       ),
       title: title,
     });
@@ -47,43 +49,31 @@ export default function cart({ navigation, title }) {
   // console.log(items);
   return (
     <View>
-      {/*         
-        <FlatList 
-            data= {items}
-           
-            renderItem={({item})=>
-              <View style={styles.warrap}>
-                 <Item categori={item}
-                    
-                />      
-              </View>
-             
-            }
-            
-            keyExtractor={item=>`${item.id}`}
-        /> */}
-      <ScrollView>
-        <FlatList
-          data={items}
-          renderItem={({ item }) => (
-            <ItemCart
-              item={item}
-              onPress={() => deleteI(item.id)}
-              onPressSetCart={() => addItem(item)}
-              onPressReduce ={()=> reduce(item.id)}
-
-            />
-          )}
-          keyExtractor={(item) => `${item.id}`}
-        />
-
+        
+        <Text style={styles.total}>count:{length}$</Text>
+        <Text style={styles.total}>Total:{total}$</Text>
         <Text>
           -----------------------------------------------------------------------------
         </Text>
-        <Text style={styles.total}>count:{length}$</Text>
-        <Text style={styles.total}>Total:{total}$</Text>
+        <View style={styles.list}>
+          <FlatList
+            data={items}
+            renderItem={({ item }) => (
+              <ItemCart
+                item={item}
+                onPress={() => deleteI(item.id)}
+                onPressSetCart={() => addItem(item)}
+                onPressReduce ={()=> reduce(item.id)}
+
+              />
+            )}
+            keyExtractor={(item) => `${item.id}`}
+          />
+        </View>
         
-      </ScrollView>
+       
+        
+
     </View>
   );
 }
@@ -99,4 +89,11 @@ const styles = StyleSheet.create({
   total: {
     color: "red",
   },
+  carticon:{
+    width:80,
+    alignItems:'center'
+  },
+  list:{
+    marginBottom: 120
+  }
 });

@@ -10,6 +10,7 @@ import {
   TextInput,
 } from "react-native";
 import axios from "axios";
+import { Avatar, Badge, Icon, withBadge } from 'react-native-elements'
 import Item from "../components/item";
 import { Ionicons } from "@expo/vector-icons";
 
@@ -17,6 +18,7 @@ import { connect } from "react-redux";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchData, setData } from "../redux/products";
 import { getLengthCart, loadData } from "../redux/cart";
+
 function products({ name, navigation }) {
   const products = useSelector((state) => state.products.products);
   const length = useSelector((state) => state.cart.count);
@@ -31,14 +33,20 @@ function products({ name, navigation }) {
   useEffect(() => {
     dispatch(fetchData());
   }, []);
-
+  const BadgedIcon = withBadge(length)(Icon);
   useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
-        //<Ionicons name="home" size={20} color="black" />
-        <Text>{length}</Text>
-      ),
+      <View style={styles.carticon}>
+         <BadgedIcon type="ionicon" name="cart-outline" />
+       
+      </View>
+        //<Ionicons name="home" size={20} color="black" />      
+           
+      )
+      ,
       title: name,
+     
     });
   }, [length]);
 
@@ -58,15 +66,23 @@ function products({ name, navigation }) {
     setProductsFilter(filter);
   };
   return (
-    <View>
-      <Button
-        title={colums === 1 ? "listView" : "gridView"}
-        onPress={changView}
-      ></Button>
-      <TextInput
-        onChangeText={(text) => filterProduct(text)}
-        placeholder="input search"
-      ></TextInput>
+    <View style={styles.display} >
+      <View style={styles.header}>
+        <Button
+          title={colums === 1 ? "listView" : "gridView"}
+          onPress={changView}
+        ></Button>
+        <View style={styles.search}>
+          <Icon name='search' />
+          <TextInput
+            onChangeText={(text) => filterProduct(text)}
+            placeholder="input search"
+            width={200}
+          ></TextInput>
+        </View>
+       
+      </View>
+   
 
       <FlatList
         data={productsFilter}
@@ -97,6 +113,26 @@ const styles = StyleSheet.create({
   warrap: {
     flex: 1,
   },
+  carticon: {
+    width: 80,
+    alignItems: 'center'
+  },
+  display: {
+    marginBottom: 60
+  },
+  header: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginLeft: 20,
+    marginRight: 10,
+    marginTop: 10,
+    marginBottom: 5
+  },
+  search: {
+    flexDirection:"row",
+    alignItems:"center",
+    borderWidth: 2
+  }
 });
 
 export default products;

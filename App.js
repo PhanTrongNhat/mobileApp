@@ -18,6 +18,8 @@ import secure from "./screens/signInScreen";
 
 import { Provider } from "react-redux";
 import store from "./redux/store";
+
+
 //splash
 
 import SplashScreen from "./screens/splashScreen";
@@ -25,6 +27,7 @@ const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
 export default function App() {
+  
   const [flag, setFlag] = useState(true);
   useEffect(() => {
     setTimeout(() => {
@@ -64,7 +67,7 @@ export default function App() {
           <Tab.Screen name="home" component={homeStack} />
 
           <Tab.Screen name="wishlist" component={wishlistStack} />
-          <Tab.Screen name="cart" component={cartStack} />
+          <Tab.Screen name="cart" component={cartStack}  />
           <Tab.Screen name="me" component={meStack} />
         </Tab.Navigator>
       </NavigationContainer>

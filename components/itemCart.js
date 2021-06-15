@@ -18,14 +18,23 @@ export default function ({ item, onPress, onPressSetCart, onPressReduce }) {
           <Image style={style.image} source={product}></Image>
         </View>
         <View style={style.item}>
-          <Text>Count:{item.count}</Text>
+          
           <Text style={style.cost}>Cost:{item.cost}$</Text>
           <Text>Total:{item.count * item.cost}$</Text>
           <View style={style.button}>
-            <Button title="-"  onPress={onPressReduce}></Button>
-            <Button title="+" onPress={onPressSetCart}></Button>
+            <View style={style.reduce}>
+              <Button title="-"  onPress={onPressReduce}></Button>
+            </View>
+            <Text>{item.count}</Text>
+            <View style={style.increse}>
+              <Button title="+" onPress={onPressSetCart}></Button>
+            </View>
+            
           </View>
-          <Button title="delete"onPress={onPress}></Button>
+          <View style={style.delete}>
+            <Button title="delete"onPress={onPress}></Button>
+          </View>
+          
         </View>
       </View>
     </TouchableOpacity>
@@ -64,5 +73,16 @@ const style = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignContent: 'space-between'
+  },
+  increse:{
+    margin: 5,
+    width: 50
+  },
+  reduce:{
+    margin: 5,
+    width: 50
+  },
+  delete:{
+    marginBottom:10
   }
 });
