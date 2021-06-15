@@ -16,31 +16,7 @@ const initState = {
   total: 0,
   count: 0,
 };
-// const initState = {
-//   items: [],
-//   total: 0,
-//   count: 0,
-// };
-//lấy dữ liệu từ AsyncStorage
-// const storeData = async (value) => {
-//   try {
-//     const jsonValue = JSON.stringify(value);
-//     await AsyncStorage.setItem("cart", jsonValue);
-//   } catch (e) {
-//     console.log(e);
-//   }
-// };
 
-// const getAsync = async () => {
-//   try {
-//     const jsonValue = await AsyncStorage.getItem("cart");
-//     initState = JSON.parse(jsonValue);
-
-//     return jsonValue != null ? await JSON.parse(jsonValue) : null;
-//   } catch (e) {
-//     // error reading value
-//   }
-// };
 // action get data
 export const loadData = () => async (dispatch) => {
   const res = await axios.get("https://2g8ge.sse.codesandbox.io/cart");
@@ -78,10 +54,8 @@ const reducer = (state = initState, action) => {
     case REDUCEITEM:{
       let arr, index;
       arr = [...state.items];
-      console.log(arr);
-      console.log(action.payload);
       index = arr.findIndex((item) => item.id === action.payload);
-      console.log(index);
+    
       if(arr[index].count === 1){
         state.count --;
         state.total -= arr[index].cost;

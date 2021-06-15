@@ -17,7 +17,10 @@ export default function (props) {
         <Image style={style.image} source={product}></Image>
         <Text style={style.text}>{categori.name}</Text>
         <Text style={style.cost}>Cost:{categori.cost}</Text>
-        <Button title="buy" onPress={onPress}></Button>
+        <View style={style.button}>
+          <Button  title="buy" onPress={onPress}></Button>
+        </View>
+       
       </View>
     </TouchableOpacity>
   );
@@ -33,6 +36,10 @@ const style = StyleSheet.create({
     shadowColor: "grey",
     shadowOpacity: 20,
     shadowOffset: { width: 0, height: 0 },
+    borderWidth: 5,
+    
+   
+  
   },
   image: {
     width: 100,
@@ -45,4 +52,8 @@ const style = StyleSheet.create({
   cost: {
     color: "black",
   },
+  button: {
+    width:100,
+    marginBottom:10
+  }
 });

@@ -5,7 +5,7 @@ import Item from "../components/item";
 import { Ionicons } from "@expo/vector-icons";
 import { useSelector, useDispatch } from "react-redux";
 import { setCart, getLengthCart } from "../redux/cart";
-
+import { Avatar, Badge, Icon, withBadge } from 'react-native-elements'
 export default function productDetail(props) {
   const length = useSelector((state) => state.cart.count);
   const dispatch = useDispatch();
@@ -19,13 +19,14 @@ export default function productDetail(props) {
     //item.id = length + 1;
     dispatch(setCart(item));
   };
-
+  const BadgedIcon = withBadge(length)(Icon);
   useLayoutEffect(() => {
     navigation.setOptions(
       {
         headerRight: () => (
-          //<Ionicons name="home" size={20} color="black" />
-          <Text>{length}</Text>
+          <View style={styles.carticon}>
+            <BadgedIcon type="ionicon" name="cart-outline" />       
+          </View>
         ),
         title: item.name,
       },
@@ -39,18 +40,11 @@ export default function productDetail(props) {
       <View style={styles.detail}>
         <Image style={styles.image} source={image}></Image>
         <Text>{item.name}</Text>
-        <Text>{item.cost}</Text>
+        <Text>{item.cost}$</Text>
       </View>
       <View  style={styles.button}>
         <Button title="ADD TO CART" onPress={addItem}></Button>
       </View>
-     
-      {/* <Button title="Go back" onPress={() => navigation.goBack()}></Button>
-      {/* <Button
-        title="push"
-        onPress={() => navigation.push("DETAIL", { name: "abc" })}
-      ></Button> */}
-      {/* <Button title="home" onPress={() => navigation.popToTop()}></Button>  */}
     </View>
   );
 }
@@ -71,8 +65,14 @@ const styles = StyleSheet.create({
     alignContent: "center",
     textAlign: "center",
     alignItems: "center",
+    borderWidth: 1,
+    marginBottom: 20
   },
   button: {
+    alignItems:'center'
+  },
+  carticon:{
+    width:80,
     alignItems:'center'
   }
 });

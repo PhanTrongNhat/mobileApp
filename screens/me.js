@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, Button } from "react-native";
 import Item from "../components/item";
 import { Ionicons } from "@expo/vector-icons";
 import { useSelector } from "react-redux";
+
 export default function me(props) {
   const length = useSelector((state) => state.cart.items.length);
   useLayoutEffect(() => {

@@ -4,6 +4,7 @@ import Item from "../components/item";
 import { Ionicons } from "@expo/vector-icons";
 import { useDispatch, useSelector } from "react-redux";
 import {signOut} from "../redux/auth";
+import { Avatar,icon } from 'react-native-elements';
 
 export default function profile({navigation,name}) {
   const length = useSelector((state) => state.cart.count);
@@ -27,8 +28,23 @@ export default function profile({navigation,name}) {
   }
   return (
     <View>
-      <Text>{user.name}</Text>
-      <Text>profile</Text>
+   
+    
+
+      <View style={styles.username}>
+        <Text style={styles.name}>{user.name}</Text>
+       
+        <Avatar
+            size="large"
+            rounded
+            icon={{name: 'user', color: 'grey', type: 'font-awesome'}}
+            overlayContainerStyle={{backgroundColor: 'white'}}
+            onPress={() => console.log("Works!")}
+            activeOpacity={0.7}
+           
+        />
+      </View>
+     
       <Button title="log out" onPress={()=> logOut()}/>
     </View>
   );
@@ -42,4 +58,18 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
+  username:{
+   justifyContent: "space-around",
+    flexDirection: "row",
+    alignItems:"center",
+    marginBottom: 100 ,
+    backgroundColor:"grey",
+    height:100
+   
+  },
+  name:{
+    fontSize: 20,
+    color: "#4169E1"
+
+  }
 });

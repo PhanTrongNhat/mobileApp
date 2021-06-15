@@ -3,13 +3,16 @@ import { StyleSheet, Text, View, Button } from "react-native";
 import Item from "../components/item";
 import { Ionicons } from "@expo/vector-icons";
 import { useSelector } from "react-redux";
+import { Avatar, Badge, Icon, withBadge } from 'react-native-elements'
 export default function wishlist(props) {
   const length = useSelector((state) => state.cart.count);
+  const BadgedIcon = withBadge(length)(Icon);
   useLayoutEffect(() => {
     props.navigation.setOptions({
       headerRight: () => (
-        //<Ionicons name="home" size={20} color="black" />
-        <Text>{length}</Text>
+        <View style={styles.carticon}>
+          <BadgedIcon type="ionicon" name="cart-outline" />       
+        </View>
       ),
       title: props.title,
     });
@@ -29,4 +32,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
+  carticon:{
+    width:80,
+    alignItems:'center'
+  }
 });
