@@ -1,33 +1,26 @@
-import { StatusBar } from "expo-status-bar";
 import React, { useEffect, useState } from "react";
 import { StyleSheet } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { Header } from "react-native-elements";
-//import Ionicons from 'react-native-vector-icons/Ionicons';
-//tab navigator
+
 import { Ionicons } from "@expo/vector-icons";
 //screen
-import * as SecureStore from "expo-secure-store";
+
 import homeStack from "./stackNavigation/homeStack.js";
 import wishlistStack from "./stackNavigation/wishlistStack.js";
 import meStack from "./stackNavigation/meStack.js";
 import cartStack from "./stackNavigation/cartStack.js";
-import secure from "./screens/signInScreen";
 
 import { Provider } from "react-redux";
 import store from "./redux/store";
-
 
 //splash
 
 import SplashScreen from "./screens/splashScreen";
 const Tab = createBottomTabNavigator();
-const Stack = createStackNavigator();
 
 export default function App() {
-  
   const [flag, setFlag] = useState(true);
   useEffect(() => {
     setTimeout(() => {
@@ -67,7 +60,7 @@ export default function App() {
           <Tab.Screen name="home" component={homeStack} />
 
           <Tab.Screen name="wishlist" component={wishlistStack} />
-          <Tab.Screen name="cart" component={cartStack}  />
+          <Tab.Screen name="cart" component={cartStack} />
           <Tab.Screen name="me" component={meStack} />
         </Tab.Navigator>
       </NavigationContainer>

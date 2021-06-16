@@ -1,31 +1,16 @@
-import React, { useState, useLayoutEffect, useEffect } from "react";
-import {
-  StyleSheet,
-  Text,
-  View,
-  Button,
-  FlatList,
-  ScrollView,
-} from "react-native";
-
-import { Ionicons } from "@expo/vector-icons";
-
+import React, {  useLayoutEffect, useEffect } from "react";
+import { StyleSheet, Text, View, FlatList } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
-import { deleteItem, setCart, getData, setDATA,loadData ,reduceItem} from "../redux/cart";
+import { deleteItem, setCart, reduceItem } from "../redux/cart";
 //import itemCart from '../components/itemCart';
 import ItemCart from "../components/itemCart";
-import Item from "../components/item";
-import { Colors } from "react-native/Libraries/NewAppScreen";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { Avatar, Badge, Icon, withBadge } from 'react-native-elements'
+import { Icon, withBadge } from "react-native-elements";
 export default function cart({ navigation, title }) {
   const dispatch = useDispatch();
- 
   const length = useSelector((state) => state.cart.count);
   const total = useSelector((state) => state.cart.total);
   const items = useSelector((state) => state.cart.items);
 
-  useEffect(() => {}, [items]);
   const BadgedIcon = withBadge(length)(Icon);
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -37,43 +22,38 @@ export default function cart({ navigation, title }) {
       title: title,
     });
   }, [length]);
+  useEffect(() => {}, [items]);
   const deleteI = (id) => {
     dispatch(deleteItem(id));
   };
   const addItem = (item) => {
     dispatch(setCart(item));
   };
-  const reduce = (id)=>{
+  const reduce = (id) => {
     dispatch(reduceItem(id));
-  }
+  };
   // console.log(items);
   return (
     <View>
-        
+      <View style={styles.header}>
         <Text style={styles.total}>count:{length}$</Text>
         <Text style={styles.total}>Total:{total}$</Text>
-        <Text>
-          -----------------------------------------------------------------------------
-        </Text>
-        <View style={styles.list}>
-          <FlatList
-            data={items}
-            renderItem={({ item }) => (
-              <ItemCart
-                item={item}
-                onPress={() => deleteI(item.id)}
-                onPressSetCart={() => addItem(item)}
-                onPressReduce ={()=> reduce(item.id)}
+      </View>
 
-              />
-            )}
-            keyExtractor={(item) => `${item.id}`}
-          />
-        </View>
-        
-       
-        
-
+      <View style={styles.list}>
+        <FlatList
+          data={items}
+          renderItem={({ item }) => (
+            <ItemCart
+              item={item}
+              onPress={() => deleteI(item.id)}
+              onPressSetCart={() => addItem(item)}
+              onPressReduce={() => reduce(item.id)}
+            />
+          )}
+          keyExtractor={(item) => `${item.id}`}
+        />
+      </View>
     </View>
   );
 }
@@ -89,11 +69,14 @@ const styles = StyleSheet.create({
   total: {
     color: "red",
   },
-  carticon:{
-    width:80,
-    alignItems:'center'
+  carticon: {
+    width: 80,
+    alignItems: "center",
   },
-  list:{
-    marginBottom: 120
-  }
+  list: {
+    marginBottom: 70,
+  },
+  header: {
+    borderWidth: 1,
+  },
 });

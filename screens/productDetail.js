@@ -1,22 +1,19 @@
-import { StatusBar } from "expo-status-bar";
 import React, { useState, useLayoutEffect, useEffect } from "react";
 import { StyleSheet, Text, View, Button, Image } from "react-native";
-import Item from "../components/item";
-import { Ionicons } from "@expo/vector-icons";
 import { useSelector, useDispatch } from "react-redux";
-import { setCart, getLengthCart } from "../redux/cart";
-import { Avatar, Badge, Icon, withBadge } from 'react-native-elements'
+import { setCart } from "../redux/cart";
+import { Icon, withBadge } from "react-native-elements";
+
 export default function productDetail(props) {
   const length = useSelector((state) => state.cart.count);
   const dispatch = useDispatch();
   useEffect(() => {}, [length]);
   const { navigation } = props;
   const { item } = props.route.params;
-  //console.log(item);
-  const [image, setImage] = useState("");
-  let src = "../assets/wardrobe.png";
+
+  let src; // = require (item.image);
+
   const addItem = () => {
-    //item.id = length + 1;
     dispatch(setCart(item));
   };
   const BadgedIcon = withBadge(length)(Icon);
@@ -25,24 +22,33 @@ export default function productDetail(props) {
       {
         headerRight: () => (
           <View style={styles.carticon}>
-            <BadgedIcon type="ionicon" name="cart-outline" />       
+            <BadgedIcon type="ionicon" name="cart-outline" />
           </View>
         ),
         title: item.name,
       },
       [length]
     );
-
-    import(src).then((image) => setImage(image.default));
   }, [length]);
   return (
     <View>
       <View style={styles.detail}>
-        <Image style={styles.image} source={image}></Image>
+        {src ? (
+          <Image
+            style={styles.image}
+            source={require("../assets/wardrobe.png")}
+          ></Image>
+        ) : (
+          <Image
+            style={styles.image}
+            source={require("../assets/wardrobe.png")}
+          ></Image>
+        )}
+
         <Text>{item.name}</Text>
         <Text>{item.cost}$</Text>
       </View>
-      <View  style={styles.button}>
+      <View style={styles.button}>
         <Button title="ADD TO CART" onPress={addItem}></Button>
       </View>
     </View>
@@ -66,13 +72,13 @@ const styles = StyleSheet.create({
     textAlign: "center",
     alignItems: "center",
     borderWidth: 1,
-    marginBottom: 20
+    marginBottom: 20,
   },
   button: {
-    alignItems:'center'
+    alignItems: "center",
   },
-  carticon:{
-    width:80,
-    alignItems:'center'
-  }
+  carticon: {
+    width: 80,
+    alignItems: "center",
+  },
 });

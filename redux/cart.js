@@ -1,4 +1,3 @@
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 const SETCART = "SETCART";
 const LOADDATA = "GETDATA";
@@ -51,13 +50,13 @@ export const getLengthCart = () => {
 //reducer
 const reducer = (state = initState, action) => {
   switch (action.type) {
-    case REDUCEITEM:{
+    case REDUCEITEM: {
       let arr, index;
       arr = [...state.items];
       index = arr.findIndex((item) => item.id === action.payload);
-    
-      if(arr[index].count === 1){
-        state.count --;
+
+      if (arr[index].count === 1) {
+        state.count--;
         state.total -= arr[index].cost;
         arr.splice(index, 1);
         setData({ ...state, items: arr });
@@ -65,9 +64,9 @@ const reducer = (state = initState, action) => {
           ...state,
           items: arr,
         };
-      }else{
-        arr[index].count--; 
-        state.count --;
+      } else {
+        arr[index].count--;
+        state.count--;
         state.total -= arr[index].cost;
         setData({ ...state, items: arr });
         return {
@@ -76,48 +75,46 @@ const reducer = (state = initState, action) => {
         };
       }
     }
-     
-    
-    case LOADDATA:{
+
+    case LOADDATA: {
       return {
         ...state,
         ...action.payload,
       };
     }
-     
-    case SETCART:{
-       //khai báo mảng tạm và biến lưu index sản phẩm trong giỏ hàng
-       let arr, temp;
-       arr = [...state.items];
-       temp = arr.findIndex((item) => item.id === action.payload.id);
- 
-       //kiểm tra sản phẩm tồn tại ở giỏ hàng chưa
-       if (state.count === 0 || temp === -1) {
-         //cộng biến thêm 1 và update giỏ hàng
-         action.payload.count = 1;
-         arr.push(action.payload);
-         state.count++;
-         state.total += action.payload.cost;
-         //storeData({ ...state, items: arr });
-         setData({ ...state, items: arr });
-         return {
-           ...state,
-           items: arr,
-         };
-       } //cộng biến thêm 1 và update giỏ hàng
-       arr[temp].count++;
-       state.count++;
-       state.total += action.payload.cost;
-      
-       setData({ ...state, items: arr });
-       return {
-         ...state,
-         items: arr,
-       };
- 
+
+    case SETCART: {
+      //khai báo mảng tạm và biến lưu index sản phẩm trong giỏ hàng
+      let arr, temp;
+      arr = [...state.items];
+      temp = arr.findIndex((item) => item.id === action.payload.id);
+
+      //kiểm tra sản phẩm tồn tại ở giỏ hàng chưa
+      if (state.count === 0 || temp === -1) {
+        //cộng biến thêm 1 và update giỏ hàng
+        action.payload.count = 1;
+        arr.push(action.payload);
+        state.count++;
+        state.total += action.payload.cost;
+        //storeData({ ...state, items: arr });
+        setData({ ...state, items: arr });
+        return {
+          ...state,
+          items: arr,
+        };
+      } //cộng biến thêm 1 và update giỏ hàng
+      arr[temp].count++;
+      state.count++;
+      state.total += action.payload.cost;
+
+      setData({ ...state, items: arr });
+      return {
+        ...state,
+        items: arr,
+      };
     }
-     
-    case DELETEITEM:{
+
+    case DELETEITEM: {
       arr = [...state.items];
       //tìm vị trí phần tử cần xóa
       let index = arr.findIndex((item) => item.id === action.payload);
@@ -130,9 +127,8 @@ const reducer = (state = initState, action) => {
         ...state,
         items: arr,
       };
-
     }
-     
+
     default:
       return state;
   }

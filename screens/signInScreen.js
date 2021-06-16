@@ -1,17 +1,17 @@
-import React, { useState, useLayoutEffect, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { StyleSheet, Text, View, Button, TextInput } from "react-native";
-import Item from "../components/item";
-import { Ionicons } from "@expo/vector-icons";
-import { useDispatch, useSelector } from "react-redux";
-import { signIn, loadData} from "../redux/auth";
-import { Avatar, Badge, Icon, withBadge } from 'react-native-elements'
+
+import { useDispatch } from "react-redux";
+import { signIn, loadData } from "../redux/auth";
+import { Icon } from "react-native-elements";
+
 export default function signInScreen({ navigation }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
   const dispatch = useDispatch();
   useEffect(() => {
-   dispatch(loadData());
+    dispatch(loadData());
   }, []);
   const submit = (infor) => {
     dispatch(signIn(infor));
@@ -24,7 +24,7 @@ export default function signInScreen({ navigation }) {
       </View>
       <View style={styles.viewBottom}>
         <View style={styles.icon}>
-          <Icon name='person' />
+          <Icon name="person" />
           <TextInput
             placeholder="Username"
             value={username}
@@ -32,7 +32,7 @@ export default function signInScreen({ navigation }) {
           />
         </View>
         <View style={styles.icon}>
-        <Icon name='lock'  />
+          <Icon name="lock" />
           <TextInput
             placeholder="Password"
             value={password}
@@ -40,10 +40,9 @@ export default function signInScreen({ navigation }) {
             secureTextEntry
           />
         </View>
-        
-        <Button title="Signin" onPress={() => submit({username, password})} />
+
+        <Button title="Signin" onPress={() => submit({ username, password })} />
       </View>
-     
     </View>
   );
 }
@@ -52,26 +51,22 @@ const styles = StyleSheet.create({
     flex: 1,
     alignContent: "center",
     justifyContent: "center",
-    marginLeft:20,
-    marginRight:20
+    marginLeft: 20,
+    marginRight: 20,
   },
-  viewBottom:{
+  viewBottom: {
     marginBottom: 200,
-    
   },
-  textView:{
-    alignItems:'center',
+  textView: {
+    alignItems: "center",
     textTransform: "uppercase",
     marginBottom: 50,
-  
-
   },
-  text:{
-    textTransform:"uppercase",
+  text: {
+    textTransform: "uppercase",
     fontSize: 30,
   },
-  icon:{
-  
-    flexDirection: "row"
-  }
+  icon: {
+    flexDirection: "row",
+  },
 });

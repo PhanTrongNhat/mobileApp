@@ -4,13 +4,12 @@ import {
   Image,
   Text,
   StyleSheet,
-  Alert,
   TouchableOpacity,
   Button,
 } from "react-native";
 import product from "../assets/wardrobe.png";
-export default function (props) {
-  const { categori, onPress } = props;
+import { Icon } from "react-native-elements";
+export default function ({ categori, onPress, onPressStatus }) {
   return (
     <TouchableOpacity activeOpacity={0.5} onPress={onPress}>
       <View style={style.container}>
@@ -18,9 +17,15 @@ export default function (props) {
         <Text style={style.text}>{categori.name}</Text>
         <Text style={style.cost}>Cost:{categori.cost}</Text>
         <View style={style.button}>
-          <Button  title="buy" onPress={onPress}></Button>
+          <Button title="buy" onPress={onPress}></Button>
+          <TouchableOpacity activeOpacity={0.5} onPress={onPressStatus}>
+            {categori.favourite === false ? (
+              <Icon name="heart-outline" type="ionicon" />
+            ) : (
+              <Icon name="heart" type="ionicon" />
+            )}
+          </TouchableOpacity>
         </View>
-       
       </View>
     </TouchableOpacity>
   );
@@ -37,9 +42,6 @@ const style = StyleSheet.create({
     shadowOpacity: 20,
     shadowOffset: { width: 0, height: 0 },
     borderWidth: 5,
-    
-   
-  
   },
   image: {
     width: 100,
@@ -53,7 +55,7 @@ const style = StyleSheet.create({
     color: "black",
   },
   button: {
-    width:100,
-    marginBottom:10
-  }
+    width: 100,
+    marginBottom: 10,
+  },
 });

@@ -1,8 +1,6 @@
-import { StatusBar } from "expo-status-bar";
-import React, { useState } from "react";
+import React from "react";
 import { StyleSheet, Text, View, Button } from "react-native";
 import { createStackNavigator } from "@react-navigation/stack";
-import Item from "../components/item";
 
 import cart from "../screens/cart";
 
@@ -12,9 +10,7 @@ export default function cartStack(props) {
   return (
     <Stack.Navigator
       screenOptions={{
-        headerStyle: {
-          
-        },
+        headerStyle: {},
         headerTintColor: "black",
         headerTitleStyle: {
           fontWeight: "bold",

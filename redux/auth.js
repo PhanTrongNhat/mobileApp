@@ -1,8 +1,7 @@
 import axios from "axios";
-const RESTORE_TOKEN = "RESTORE_TOKEN";
-const SIGN_IN = "SIGN_IN";
-const SIGN_OUT = "SIGN_OUT";
+import md5 from "md5";
 const LOADDATA = "LOADDATA";
+//function
 const setData = async (data) =>
   await axios
     .post("https://2g8ge.sse.codesandbox.io/cart", data)
@@ -10,13 +9,13 @@ const setData = async (data) =>
       console.log(error);
     });
 let initState = {
-  user:{
+  user: {
     username: "",
     password: "",
     name: "",
-    cart:{},
+    cart: {},
     signin: false,
-  }
+  },
 };
 //action
 export const loadData = () => async (dispatch) => {
@@ -25,10 +24,9 @@ export const loadData = () => async (dispatch) => {
 };
 
 export const signIn = (infor) => {
-  
   return {
     type: "SIGN_IN",
-    payload: infor
+    payload: infor,
   };
 };
 
@@ -48,38 +46,29 @@ const reducer = (state = initState, action) => {
   switch (action.type) {
     case LOADDATA:
       return {
-        ...state,...action.payload
-      
+        ...state,
+        ...action.payload,
       };
-    // case "RESTORE_TOKEN":
-    //   return {
-    //     ...state,
-    //     userToken: action.token,
-    //     isLoading: false,
-    //   };
     case "SIGN_IN":
-      // set biến giá trị khi đăng nhập
-      console.log(typeof state.password,typeof action.payload.password);
-      console.log(state.password, action.payload.password);
-      console.log(state.username, action.payload.username);
-
-      if(state.password == action.payload.password && 
-        state.username == action.payload.username){
-          return {
-            ...state,
-            signin: true,
-          };
-        }else{
-          alert('userName or password incorrect!')
-          return {
-            ...state,
-            signin: false,
-          };
-        } 
+      if (
+        state.password == md5(action.payload.password) &&
+        state.username == action.payload.username
+      ) {
+        return {
+          ...state,
+          signin: true,
+        };
+      } else {
+        alert("userName or password incorrect!");
+        return {
+          ...state,
+          signin: false,
+        };
+      }
     case "SIGN_OUT":
       return {
         ...state,
-        signin: false
+        signin: false,
       };
     default: {
       return state;

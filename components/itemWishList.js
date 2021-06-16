@@ -1,15 +1,8 @@
 import React from "react";
-import {
-  View,
-  Image,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  Button,
-} from "react-native";
-import {Icon } from "react-native-elements";
+import { View, Image, Text, StyleSheet, TouchableOpacity } from "react-native";
 import product from "../assets/wardrobe.png";
-export default function ({ item, onPress, onPressSetCart, onPressReduce }) {
+import { Icon } from "react-native-elements";
+export default function ({ item, onPress }) {
   return (
     <TouchableOpacity activeOpacity={0.5}>
       <View style={style.container}>
@@ -19,25 +12,10 @@ export default function ({ item, onPress, onPressSetCart, onPressReduce }) {
         </View>
         <View style={style.item}>
           <Text style={style.cost}>Cost:{item.cost}$</Text>
-          <Text>Total:{item.count * item.cost}$</Text>
-          <View style={style.button}>
-            <View style={style.reduce}>
-              <TouchableOpacity  onPress={onPressReduce}>
-                <Icon name="remove-circle-outline" type="ionicon" size={50} />
-              </TouchableOpacity>
-            </View>
-            <Text>{item.count}</Text>
-            <View style={style.increse}>
-              <TouchableOpacity  onPress={onPressSetCart}>
-                <Icon name="add-circle-outline" type="ionicon" size={50} />
-              </TouchableOpacity>
-             
-            </View>
-          </View>
           <View style={style.delete}>
-              <TouchableOpacity  onPress={onPress}>
-                <Icon name="trash-outline" type="ionicon" size={50} />
-              </TouchableOpacity>
+            <TouchableOpacity activeOpacity={0.5} onPress={onPress}>
+              <Icon name="trash-outline" type="ionicon" size={50} color="red" />
+            </TouchableOpacity>
           </View>
         </View>
       </View>
@@ -57,7 +35,9 @@ const style = StyleSheet.create({
     shadowColor: "grey",
     shadowOpacity: 20,
     shadowOffset: { width: 0, height: 0 },
+    height: 150,
   },
+
   image: {
     width: 100,
     height: 100,

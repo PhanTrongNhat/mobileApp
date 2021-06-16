@@ -1,13 +1,12 @@
-import React, {  useLayoutEffect } from "react";
+import React, { useLayoutEffect } from "react";
 import { StyleSheet, Text, View, Button } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
-import {signOut} from "../redux/auth";
-import { Avatar, withBadge, Icon} from 'react-native-elements';
+import { signOut } from "../redux/auth";
+import { Avatar, withBadge, Icon } from "react-native-elements";
 
-export default function profile({navigation,name}) {
+export default function profile({ navigation, name }) {
   const length = useSelector((state) => state.cart.count);
-  const user = useSelector(state => state.auth);
-  console.log(user);
+  const user = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const BadgedIcon = withBadge(length)(Icon);
   useLayoutEffect(() => {
@@ -15,36 +14,30 @@ export default function profile({navigation,name}) {
       headerRight: () => (
         <View style={styles.carticon}>
           <BadgedIcon type="ionicon" name="cart-outline" />
-      
         </View>
       ),
-      title: name
+      title: name,
     });
   }, [length]);
-  const logOut = ()=>{
+  const logOut = () => {
     dispatch(signOut());
-    
-  }
+  };
   return (
     <View>
-   
-    
-
       <View style={styles.username}>
         <Text style={styles.name}>{user.name}</Text>
-       
+
         <Avatar
-            size="large"
-            rounded
-            icon={{name: 'user', color: 'grey', type: 'font-awesome'}}
-            overlayContainerStyle={{backgroundColor: 'white'}}
-            onPress={() => console.log("Works!")}
-            activeOpacity={0.7}
-           
+          size="large"
+          rounded
+          icon={{ name: "user", color: "grey", type: "font-awesome" }}
+          overlayContainerStyle={{ backgroundColor: "white" }}
+          onPress={() => console.log("Works!")}
+          activeOpacity={0.7}
         />
       </View>
-     
-      <Button title="log out" onPress={()=> logOut()}/>
+
+      <Button title="log out" onPress={() => logOut()} />
     </View>
   );
 }
@@ -57,23 +50,20 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  username:{
-   justifyContent: "space-around",
+  username: {
+    justifyContent: "space-around",
     flexDirection: "row",
-    alignItems:"center",
-    marginBottom: 100 ,
-    backgroundColor:"grey",
-    height:100
-   
+    alignItems: "center",
+    marginBottom: 100,
+    backgroundColor: "grey",
+    height: 100,
   },
-  name:{
+  name: {
     fontSize: 20,
-    color: "#4169E1"
-
+    color: "#4169E1",
   },
-  carticon:{
-    width:80,
-    alignItems:'center'
-  }
-  
+  carticon: {
+    width: 80,
+    alignItems: "center",
+  },
 });

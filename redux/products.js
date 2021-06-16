@@ -1,9 +1,16 @@
 import axios from "axios";
 const SETDATA = "SETDATA";
 const GETDATA = "GETDATA";
+const SETSTATUS = " SETSTATUS";
 let initState = {
   products: [],
 };
+const setDataSatus = async (data) =>
+  await axios
+    .post("https://2g8ge.sse.codesandbox.io/products", data)
+    .catch((error) => {
+      console.log(error);
+    });
 //action
 export const setData = (product) => {
   return {
@@ -13,19 +20,26 @@ export const setData = (product) => {
 };
 export const getData = () => {
   return {
-    type: "GETDATA",
+    type: GETDATA,
+  };
+};
+
+export const setStatusProducts = (id) => {
+
+  return {
+    type: SETSTATUS,
+    payload: id,
   };
 };
 export const fetchData = () => async (dispatch) => {
   const res = await axios.get("https://2g8ge.sse.codesandbox.io/products");
 
-
-  dispatch({ type: SETDATA, payload: res.data });
+  dispatch({ type: SETDATA, payload: res.data.products });
 };
 
 const reducer = (state = initState, action) => {
   switch (action.type) {
-    case "GETDATA":
+    case GETDATA:
       return {
         ...state,
       };
@@ -33,6 +47,18 @@ const reducer = (state = initState, action) => {
       return {
         ...state,
         products: action.payload,
+      };
+    case SETSTATUS:
+      let arr = [...state.products];
+      const index = arr.findIndex((item) => item.id === action.payload);
+      arr[index].favourite = !arr[index].favourite;
+      setDataSatus({
+        ...state,
+        products: arr,
+      });
+      return {
+        ...state,
+        products: arr,
       };
     default:
       return state;

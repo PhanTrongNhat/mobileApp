@@ -1,23 +1,19 @@
-import { StatusBar } from "expo-status-bar";
-import React, { useState, useEffect } from "react";
-import { StyleSheet, Text, View, Button } from "react-native";
+import React from "react";
+import { StyleSheet } from "react-native";
 import { createStackNavigator } from "@react-navigation/stack";
-import Item from "../components/item";
 
 import signIn from "../screens/signInScreen";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import profile from "../screens/profile";
 const Stack = createStackNavigator();
 
-export default function meStack(props) {
+export default function meStack() {
   const sign = useSelector((state) => state.auth.signin);
- 
+
   return (
     <Stack.Navigator
       screenOptions={{
-        headerStyle: {
-          
-        },
+        headerStyle: {},
         headerTintColor: "black",
         headerTitleStyle: {
           fontWeight: "bold",

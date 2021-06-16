@@ -1,20 +1,15 @@
-import { StatusBar } from "expo-status-bar";
-import React, { useState } from "react";
-import { StyleSheet, Text, View, Button } from "react-native";
+import React from "react";
+import { StyleSheet } from "react-native";
 import { createStackNavigator } from "@react-navigation/stack";
-import Item from "../components/item";
-
 import shop from "../screens/shop";
 
 const Stack = createStackNavigator();
 
-export default function shopStack(props) {
+export default function shopStack() {
   return (
     <Stack.Navigator
       screenOptions={{
-        headerStyle: {
-          
-        },
+        headerStyle: {},
         headerTintColor: "black",
         headerTitleStyle: {
           fontWeight: "bold",

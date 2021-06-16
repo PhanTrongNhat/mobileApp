@@ -1,14 +1,13 @@
-import { StatusBar } from "expo-status-bar";
-import React, { useState } from "react";
-import { StyleSheet, Text, View, Button } from "react-native";
+import React from "react";
+import { StyleSheet } from "react-native";
 import { createStackNavigator } from "@react-navigation/stack";
-import Item from "../components/item";
+
 
 import wishlist from "../screens/wishlist";
 
 const Stack = createStackNavigator();
 
-export default function wishlistStack(props) {
+export default function wishlistStack() {
   return (
     <Stack.Navigator
       screenOptions={{
