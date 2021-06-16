@@ -1,22 +1,21 @@
-import React, { useState, useLayoutEffect, useEffect } from "react";
+import React, {  useLayoutEffect } from "react";
 import { StyleSheet, Text, View, Button } from "react-native";
-import Item from "../components/item";
-import { Ionicons } from "@expo/vector-icons";
 import { useDispatch, useSelector } from "react-redux";
 import {signOut} from "../redux/auth";
-import { Avatar,icon } from 'react-native-elements';
+import { Avatar, withBadge, Icon} from 'react-native-elements';
 
 export default function profile({navigation,name}) {
   const length = useSelector((state) => state.cart.count);
   const user = useSelector(state => state.auth);
   console.log(user);
   const dispatch = useDispatch();
+  const BadgedIcon = withBadge(length)(Icon);
   useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
-        <View>
-          <Ionicons name="cart" size={20} color="black" />
-          <Text>{length}</Text>
+        <View style={styles.carticon}>
+          <BadgedIcon type="ionicon" name="cart-outline" />
+      
         </View>
       ),
       title: name
@@ -71,5 +70,10 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: "#4169E1"
 
+  },
+  carticon:{
+    width:80,
+    alignItems:'center'
   }
+  
 });
