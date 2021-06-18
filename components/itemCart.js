@@ -7,37 +7,43 @@ import {
   TouchableOpacity,
   Button,
 } from "react-native";
-import {Icon } from "react-native-elements";
+import { Icon } from "react-native-elements";
 import product from "../assets/wardrobe.png";
 export default function ({ item, onPress, onPressSetCart, onPressReduce }) {
   return (
     <TouchableOpacity activeOpacity={0.5}>
       <View style={style.container}>
-        <View style={style.item}>
-          <Text style={style.text}>{item.name}</Text>
+        <View style={style.imageView}>
           <Image style={style.image} source={product}></Image>
         </View>
+
         <View style={style.item}>
+          <Text style={style.text}>{item.name}</Text>
           <Text style={style.cost}>Cost:{item.cost}$</Text>
           <Text>Total:{item.count * item.cost}$</Text>
-          <View style={style.button}>
-            <View style={style.reduce}>
-              <TouchableOpacity  onPress={onPressReduce}>
-                <Icon name="remove-circle-outline" type="ionicon" size={50} />
-              </TouchableOpacity>
-            </View>
-            <Text>{item.count}</Text>
-            <View style={style.increse}>
-              <TouchableOpacity  onPress={onPressSetCart}>
-                <Icon name="add-circle-outline" type="ionicon" size={50} />
-              </TouchableOpacity>
-             
-            </View>
-          </View>
           <View style={style.delete}>
-              <TouchableOpacity  onPress={onPress}>
-                <Icon name="trash-outline" type="ionicon" size={50} />
-              </TouchableOpacity>
+            <TouchableOpacity onPress={onPress}>
+              <Icon name="trash-outline" type="ionicon" size={20} />
+            </TouchableOpacity>
+          </View>
+        </View>
+
+        <View style={style.button}>
+          <View style={style.reduce}>
+            <TouchableOpacity onPress={onPressReduce}>
+             
+              <Text>-</Text>
+            </TouchableOpacity>
+          </View>
+          <View style={style.number}>
+            <Text  >{item.count}</Text>
+          </View>
+          
+          <View style={style.increse}>
+            <TouchableOpacity onPress={onPressSetCart}>
+           
+              <Text>+</Text>
+            </TouchableOpacity>
           </View>
         </View>
       </View>
@@ -49,14 +55,21 @@ const style = StyleSheet.create({
   container: {
     alignItems: "center",
     margin: 10,
-    backgroundColor: "#DCDCDC",
-    borderRadius: 10,
+    height: 130,
+    borderRadius: 5,
     flex: 1,
     justifyContent: "space-around",
     flexDirection: "row",
-    shadowColor: "grey",
-    shadowOpacity: 20,
-    shadowOffset: { width: 0, height: 0 },
+
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+
+    elevation: 5,
   },
   image: {
     width: 100,
@@ -77,16 +90,31 @@ const style = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignContent: "space-between",
+    borderWidth: 1,
   },
   increse: {
-    margin: 5,
-    width: 50,
+    width: 30,
+    height: 30,
+    backgroundColor: "#efeff5",
+   
+    borderLeftWidth: 1,
+  
+    alignItems: 'center',
+    justifyContent: 'center'
   },
   reduce: {
-    margin: 5,
-    width: 50,
+    width: 30,
+    height: 30,
+    backgroundColor: "#efeff5",
+    alignItems: 'center',
+    borderRightWidth: 1,
+    justifyContent: 'center'
   },
   delete: {
     marginBottom: 10,
   },
+  number:{
+    width: 50,
+    alignItems: 'center'
+  }
 });

@@ -1,5 +1,13 @@
 import React, { useEffect, useState, useLayoutEffect } from "react";
-import { StyleSheet, View, FlatList, Button, TextInput } from "react-native";
+import {
+  StyleSheet,
+  View,
+  FlatList,
+  Button,
+  TextInput,
+  TouchableOpacity,
+  Text,
+} from "react-native";
 
 import { Icon, withBadge } from "react-native-elements";
 import Item from "../components/item";
@@ -7,7 +15,7 @@ import Item from "../components/item";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchData, setStatusProducts } from "../redux/products";
 import { loadData } from "../redux/cart";
-
+import Catalog from "../components/catalogHome";
 function products({ name, navigation }) {
   let filter;
   const dispatch = useDispatch();
@@ -18,23 +26,24 @@ function products({ name, navigation }) {
   const BadgedIcon = withBadge(length)(Icon);
   useLayoutEffect(() => {
     navigation.setOptions({
-      headerRight: () => (
-        <View style={styles.carticon}>
-          <BadgedIcon type="ionicon" name="cart-outline" />
-        </View>
-        //<Ionicons name="home" size={20} color="black" />
-      ),
-      title: name,
+      // headerRight: () => (
+      //   // <View style={styles.carticon}>
+      //   //
+      //   // </View>
+      //   //<Ionicons name="home" size={20} color="black" />
+      // ),
+      // title: name,
+      headerShown: false,
     });
   }, [length]);
 
-  function changView() {
-    if (colums === 2) {
-      setColums(1);
-    } else {
-      setColums(2);
-    }
-  }
+  // function changView() {
+  //   if (colums === 2) {
+  //     setColums(1);
+  //   } else {
+  //     setColums(2);
+  //   }
+  // }
   const setStatus = (id) => {
     dispatch(setStatusProducts(id));
   };
@@ -49,16 +58,15 @@ function products({ name, navigation }) {
     setProductsFilter(products);
   }, [products]);
   const filterProduct = (element) => {
-    filter = products.filter((item) => item.name.includes(element));
+    filter = products.filter((item) =>
+      item.name.includes(element.toLowerCase())
+    );
     setProductsFilter(filter);
   };
   return (
     <View style={styles.display}>
       <View style={styles.header}>
-        <Button
-          title={colums === 1 ? "listView" : "gridView"}
-          onPress={changView}
-        ></Button>
+        <Icon name="menu" type="ionicon" />
         <View style={styles.search}>
           <Icon name="search" />
           <TextInput
@@ -66,6 +74,30 @@ function products({ name, navigation }) {
             placeholder="input search"
             width={200}
           ></TextInput>
+        </View>
+        <BadgedIcon type="ionicon" name="cart-outline" />
+      </View>
+      <View style={styles.typeDisplay}>
+        <TouchableOpacity onPress={() => setColums(2)}>
+          <View style={styles.typeDisplayChild}>
+            <Icon name="grid-outline" type="ionicon" size={30} />
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => setColums(1)}>
+          <View style={styles.typeDisplayChild}>
+            <Icon name="square-outline" type="ionicon" size={30} />
+          </View>
+        </TouchableOpacity>
+      </View>
+      <View>
+        <Text color="grey">catelogue</Text>
+        <View style={styles.catalog}>
+          <FlatList
+            data={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]}
+            horizontal={true}
+            renderItem={({ item }) => <Catalog name={item} />}
+            keyExtractor={(item) => `${item}`}
+          />
         </View>
       </View>
 
@@ -104,20 +136,33 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   display: {
-    marginBottom: 60,
+    marginBottom: 145,
   },
   header: {
     flexDirection: "row",
     justifyContent: "space-between",
-    marginLeft: 20,
-    marginRight: 10,
-    marginTop: 10,
+
+    marginRight: 20,
+    marginLeft: 10,
+    marginTop: 30,
     marginBottom: 5,
   },
   search: {
     flexDirection: "row",
     alignItems: "center",
-    borderWidth: 2,
+    borderWidth: 1,
+    borderRadius: 5,
+  },
+  typeDisplay: {
+    flexDirection: "row",
+
+    justifyContent: "flex-end",
+  },
+  typeDisplayChild: {
+    marginLeft: 10,
+  },
+  catalog: {
+    flexDirection: "row",
   },
 });
 

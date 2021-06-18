@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useLayoutEffect } from "react";
 import { StyleSheet, Text, View, Button, TextInput } from "react-native";
 
 import { useDispatch } from "react-redux";
@@ -16,14 +16,29 @@ export default function signInScreen({ navigation }) {
   const submit = (infor) => {
     dispatch(signIn(infor));
   };
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      // headerRight: () => (
+      //   // <View style={styles.carticon}>
+      //   //
+      //   // </View>
+      //   //<Ionicons name="home" size={20} color="black" />
+      // ),
+      // title: name,
+      headerShown: false,
+    });
+  }, []);
 
   return (
     <View style={styles.container}>
       <View style={styles.textView}>
-        <Text style={styles.text}>Login</Text>
+        <Text style={styles.title}>Sign In</Text>
       </View>
       <View style={styles.viewBottom}>
-        <View style={styles.icon}>
+        <View style={styles.nameTitle}>
+          <Text>Username</Text>
+        </View>
+        <View style={styles.userPassword}>
           <Icon name="person" />
           <TextInput
             placeholder="Username"
@@ -31,7 +46,10 @@ export default function signInScreen({ navigation }) {
             onChangeText={setUsername}
           />
         </View>
-        <View style={styles.icon}>
+        <View style={styles.nameTitle}>
+          <Text>Password</Text>
+        </View>
+        <View style={styles.userPassword}>
           <Icon name="lock" />
           <TextInput
             placeholder="Password"
@@ -40,17 +58,20 @@ export default function signInScreen({ navigation }) {
             secureTextEntry
           />
         </View>
+        <View style={styles.forgot}>
+          <Text style={styles.forgotChild}>Forgot password?</Text>
+        </View>
 
-        <Button title="Signin" onPress={() => submit({ username, password })} />
+        <Button title="Sign in" onPress={() => submit({ username, password })} />
       </View>
     </View>
   );
 }
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    alignContent: "center",
+    marginTop: 100,
     justifyContent: "center",
+
     marginLeft: 20,
     marginRight: 20,
   },
@@ -62,11 +83,26 @@ const styles = StyleSheet.create({
     textTransform: "uppercase",
     marginBottom: 50,
   },
-  text: {
-    textTransform: "uppercase",
+  title: {
     fontSize: 30,
   },
-  icon: {
+  userPassword: {
     flexDirection: "row",
+    borderWidth: 0.5,
+    borderRadius: 5,
+    height: 40,
+    alignItems: "center",
+  },
+  nameTitle: {
+    marginBottom: 10,
+    marginTop: 20,
+  },
+  forgot: {
+    marginTop: 10,
+    alignItems: "flex-end",
+    marginBottom: 20,
+  },
+  forgotChild: {
+    textDecorationLine: "underline",
   },
 });

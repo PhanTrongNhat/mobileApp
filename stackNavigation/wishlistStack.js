@@ -23,7 +23,7 @@ export default function wishlistStack() {
       <Stack.Screen
         name="WISHLIST"
         component={wishlist}
-        options={{ child: "nhat" }}
+        options={{ name: "nhat" }}
       />
     </Stack.Navigator>
   );
