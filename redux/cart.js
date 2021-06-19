@@ -92,6 +92,13 @@ const reducer = (state = initState, action) => {
       //kiểm tra sản phẩm tồn tại ở giỏ hàng chưa
       if (state.count === 0 || temp === -1) {
         //cộng biến thêm 1 và update giỏ hàng
+        // if(action.payload.count){
+
+        // }else{
+
+        // }
+        console.log(action.payload.count);
+     
         action.payload.count = 1;
         arr.push(action.payload);
         state.count++;
@@ -103,6 +110,7 @@ const reducer = (state = initState, action) => {
           items: arr,
         };
       } //cộng biến thêm 1 và update giỏ hàng
+      console.log(action.payload.count);
       arr[temp].count++;
       state.count++;
       state.total += action.payload.cost;
