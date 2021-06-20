@@ -1,10 +1,13 @@
 import React, { useLayoutEffect, useEffect } from "react";
-import { StyleSheet, Text, View, FlatList } from "react-native";
+import { StyleSheet, Text, View, FlatList, Dimensions } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import { deleteItem, setCart, reduceItem } from "../redux/cart";
 //import itemCart from '../components/itemCart';
 import ItemCart from "../components/itemCart";
 import { Icon, withBadge } from "react-native-elements";
+const w = Dimensions.get("screen").width;
+const h = Dimensions.get("screen").height;
+
 export default function cart({ navigation, title }) {
   const dispatch = useDispatch();
   const length = useSelector((state) => state.cart.count);
@@ -32,9 +35,9 @@ export default function cart({ navigation, title }) {
   const reduce = (id) => {
     dispatch(reduceItem(id));
   };
-  // console.log(items);
+
   return (
-    <View>
+    <View style={styles.display}>
       <View style={styles.header}>
         <Icon name="menu" type="ionicon" />
         <Text style={styles.title}> Cart</Text>
@@ -72,10 +75,12 @@ export default function cart({ navigation, title }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+
     alignItems: "stretch",
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
+    backgroundColor: "grey",
   },
   total: {
     color: "grey",
@@ -86,11 +91,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   list: {
-    height: 480,
+    height: h * 0.71,
   },
   bottom: {
     flexDirection: "row",
-    height: 55,
+    height: h*0.1,
     justifyContent: "flex-end",
 
     shadowColor: "#000",
@@ -99,13 +104,13 @@ const styles = StyleSheet.create({
       height: 1,
     },
     shadowOpacity: 0.18,
-    shadowRadius: 1.00,
-    
+    shadowRadius: 1.0,
+
     elevation: 0.4,
   },
   header: {
     flexDirection: "row",
-    marginTop: 30,
+    marginTop: 40,
     marginRight: 20,
     marginLeft: 10,
     justifyContent: "space-between",

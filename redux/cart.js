@@ -1,5 +1,6 @@
 import axios from "axios";
 const SETCART = "SETCART";
+const SETCARTCOUNT = "SETCARTCOUNT";
 const LOADDATA = "GETDATA";
 const GETLENGTH = "GETLENGTH";
 const DELETEITEM = "DELETEITEM";
@@ -32,6 +33,12 @@ export const reduceItem = (id) => {
 export const setCart = (item) => {
   return {
     type: SETCART,
+    payload: item,
+  };
+};
+export const setCartCount = (item) => {
+  return {
+    type: SETCARTCOUNT,
     payload: item,
   };
 };
@@ -75,7 +82,41 @@ const reducer = (state = initState, action) => {
         };
       }
     }
+    case SETCARTCOUNT: {
+      //khai báo mảng tạm và biến lưu index sản phẩm trong giỏ hàng
+      let arr, temp;
+      arr = [...state.items];
+      temp = arr.findIndex((item) => item.id === action.payload.id);
+      if (action.payload.count === 0) {
+        return {
+          ...state,
+        };
+      }
+      //kiểm tra sản phẩm tồn tại ở giỏ hàng chưa
+      if (state.count === 0 || temp === -1) {
+        //action.payload.count = 1;
+        arr.push(action.payload);
+        state.count += action.payload.count;
+        state.total += action.payload.cost * action.payload.count;
+        //storeData({ ...state, items: arr });
 
+        setData({ ...state, items: arr });
+        return {
+          ...state,
+          items: arr,
+        };
+      }
+
+      state.count = state.count + action.payload.count;
+      state.total = state.total + action.payload.cost * action.payload.count;
+
+      arr[temp].count += action.payload.count;
+      setData({ ...state, items: arr });
+      return {
+        ...state,
+        items: arr,
+      };
+    }
     case LOADDATA: {
       return {
         ...state,
@@ -92,13 +133,7 @@ const reducer = (state = initState, action) => {
       //kiểm tra sản phẩm tồn tại ở giỏ hàng chưa
       if (state.count === 0 || temp === -1) {
         //cộng biến thêm 1 và update giỏ hàng
-        // if(action.payload.count){
 
-        // }else{
-
-        // }
-        console.log(action.payload.count);
-     
         action.payload.count = 1;
         arr.push(action.payload);
         state.count++;
@@ -110,7 +145,7 @@ const reducer = (state = initState, action) => {
           items: arr,
         };
       } //cộng biến thêm 1 và update giỏ hàng
-      console.log(action.payload.count);
+
       arr[temp].count++;
       state.count++;
       state.total += action.payload.cost;
@@ -123,7 +158,7 @@ const reducer = (state = initState, action) => {
     }
 
     case DELETEITEM: {
-      arr = [...state.items];
+      let arr = [...state.items];
       //tìm vị trí phần tử cần xóa
       let index = arr.findIndex((item) => item.id === action.payload);
       state.total -= arr[index].cost * arr[index].count;

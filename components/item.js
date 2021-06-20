@@ -5,16 +5,18 @@ import {
   Text,
   StyleSheet,
   TouchableOpacity,
-  Button,
+ 
 } from "react-native";
 import product from "../assets/trousers.png";
 import { Icon } from "react-native-elements";
 export default function ({ categori, onPress, onPressStatus }) {
+
+
   return (
     <TouchableOpacity activeOpacity={0.5} onPress={onPress}>
       <View style={style.container}>
         <View style={style.imageHeart}>
-          <Image style={style.image} source={product}></Image>
+          <Image style={style.image} source={{uri : categori.image}}/>
           <TouchableOpacity
             activeOpacity={0.5}
             onPress={onPressStatus}
@@ -66,8 +68,9 @@ const style = StyleSheet.create({
     top: 5,
   },
   image: {
+    marginTop: 10,
     width: 100,
-    height: 100,
+    height: 130,
   },
   text: {
     color: "red",

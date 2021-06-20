@@ -70,11 +70,11 @@ const styles = StyleSheet.create({
 
     marginRight: 20,
     marginLeft: 10,
-    marginTop: 30,
+    marginTop: 40,
     marginBottom: 10,
   },
   list:{
-    marginBottom: 120
+    marginBottom: 160
   },
   title:{
     fontSize: 25,

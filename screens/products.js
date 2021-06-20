@@ -3,7 +3,7 @@ import {
   StyleSheet,
   View,
   FlatList,
-  Button,
+  Dimensions,
   TextInput,
   TouchableOpacity,
   Text,
@@ -16,10 +16,12 @@ import { useSelector, useDispatch } from "react-redux";
 import { fetchData, setStatusProducts } from "../redux/products";
 import { loadData } from "../redux/cart";
 import Catalog from "../components/catalogHome";
+
 function products({ name, navigation }) {
   let filter;
   const dispatch = useDispatch();
   const products = useSelector((state) => state.products.products);
+  const categoris = useSelector((state) => state.products.categoris);
   const length = useSelector((state) => state.cart.count);
   const [colums, setColums] = useState(2);
   const [productsFilter, setProductsFilter] = useState(products);
@@ -63,6 +65,17 @@ function products({ name, navigation }) {
     );
     setProductsFilter(filter);
   };
+  const filterCategoris = (element) => {
+    if (element === "all") {
+      filter = products;
+    } else {
+      filter = products.filter((item) =>
+        item.categori.includes(element.toLowerCase())
+      );
+    }
+
+    setProductsFilter(filter);
+  };
   return (
     <View style={styles.display}>
       <View style={styles.header}>
@@ -89,13 +102,22 @@ function products({ name, navigation }) {
           </View>
         </TouchableOpacity>
       </View>
-      <View>
-        <Text color="grey">catelogue</Text>
+      <View style={styles.categoris}>
+        <Text style={styles.categorisText} color="grey">
+          catelogue:
+        </Text>
         <View style={styles.catalog}>
           <FlatList
-            data={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]}
+            data={categoris}
             horizontal={true}
-            renderItem={({ item }) => <Catalog name={item} />}
+            showsVerticalScrollIndicator={false}
+            showsHorizontalScrollIndicator={false}
+            renderItem={({ item }) => (
+              <Catalog
+                name={item}
+                onPressCategori={() => filterCategoris(item)}
+              />
+            )}
             keyExtractor={(item) => `${item}`}
           />
         </View>
@@ -105,6 +127,8 @@ function products({ name, navigation }) {
         data={productsFilter}
         key={colums}
         numColumns={colums}
+        showsVerticalScrollIndicator={false}
+        showsHorizontalScrollIndicator={false}
         renderItem={({ item }) => (
           <View style={styles.warrap}>
             <Item
@@ -136,7 +160,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   display: {
-    marginBottom: 145,
+    marginBottom: 180,
   },
   header: {
     flexDirection: "row",
@@ -144,7 +168,7 @@ const styles = StyleSheet.create({
 
     marginRight: 20,
     marginLeft: 10,
-    marginTop: 30,
+    marginTop: 40,
     marginBottom: 5,
   },
   search: {
@@ -163,6 +187,17 @@ const styles = StyleSheet.create({
   },
   catalog: {
     flexDirection: "row",
+  },
+  categoris: {
+    marginBottom: 10,
+    height: 70,
+  },
+  flatList: {
+    //marginBottom: 100
+  },
+  categorisText: {
+    color: "grey",
+    marginLeft: 10,
   },
 });
 

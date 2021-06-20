@@ -1,9 +1,9 @@
 import React from "react";
 import { View, Image, Text, StyleSheet, TouchableOpacity } from "react-native";
 
-export default function ({name}) {
+export default function ({name,  onPressCategori}) {
   return (
-    <TouchableOpacity activeOpacity={0.5}>
+    <TouchableOpacity activeOpacity={0.5} onPress ={ onPressCategori}>
       <View style={style.container}>
         <Text style={style.text}>
             {name}
@@ -16,7 +16,7 @@ export default function ({name}) {
 const style = StyleSheet.create({
   container: {
     shadowColor: "black",
-    padding: 5,
+    padding: 10,
     shadowColor: "#000",
     shadowOffset: {
         width: 0,
@@ -31,7 +31,7 @@ const style = StyleSheet.create({
     margin: 5
   },
   text: {
-    height: 15,
+    height: 20,
     width: 70,
     textAlign: 'center'
   },

@@ -1,9 +1,17 @@
 import React, { useLayoutEffect } from "react";
-import { StyleSheet, Text, View, Button, TouchableOpacity } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Button,
+  TouchableOpacity,
+  Dimensions,
+} from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { signOut } from "../redux/auth";
 import { Avatar, withBadge, Icon } from "react-native-elements";
-
+const w = Dimensions.get("screen").width;
+const h = Dimensions.get("screen").height;
 export default function profile({ navigation, name }) {
   const length = useSelector((state) => state.cart.count);
   const user = useSelector((state) => state.auth);
@@ -25,20 +33,18 @@ export default function profile({ navigation, name }) {
         <BadgedIcon type="ionicon" name="cart-outline" />
       </View>
       <View style={styles.username}>
-        <Text style={styles.name}>{user.name}</Text>
         <Avatar
           rounded
           size="large"
-          source={
-            require('../assets/logouser.jpg')          
-          }
+          source={require("../assets/logouser.jpg")}
         />
+        <Text style={styles.name}>{user.name}</Text>
       </View>
 
-      <View style={styles.information}>
+      <View style={styles.informations}>
         <Text style={styles.tabChildTitle}>Information</Text>
         <View style={styles.tabChild}>
-          <View  style={styles.icon}>
+          <View style={styles.icon}>
             <Icon name="person-outline" type="ionicon" />
           </View>
 
@@ -61,7 +67,6 @@ export default function profile({ navigation, name }) {
           <View style={styles.icon}>
             <Icon name="settings-outline" type="ionicon" />
           </View>
-
           <Text style={styles.tabChildText}>App settings</Text>
           <Icon name="chevron-forward-outline" type="ionicon" />
         </View>
@@ -102,17 +107,24 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
+  informations: {
+    height: h * 0.24,
+  },
+  settings: {
+    height: h * 0.3,
+  },
   username: {
     justifyContent: "space-around",
     flexDirection: "row",
     alignItems: "center",
     marginBottom: 20,
-    backgroundColor: "#ccccff",
-    height: 100,
+    backgroundColor: "#e6e6e6",
+    height: 90,
   },
   name: {
-    fontSize: 20,
-    color: "#4169E1",
+    fontSize: 15,
+    color: "black",
+    marginRight: 20,
   },
   carticon: {
     width: 80,
@@ -124,11 +136,11 @@ const styles = StyleSheet.create({
     alignItems: "flex-end",
     justifyContent: "flex-end",
     marginRight: 20,
-    marginBottom: 20,
+    marginBottom: 10,
   },
   headerText: {
     textAlign: "center",
-    marginRight: 80,
+    marginRight: 100,
     fontWeight: "bold",
     fontSize: 25,
   },
@@ -148,7 +160,7 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     marginBottom: 15,
   },
-  icon:{
-    marginRight: 20
-  }
+  icon: {
+    marginRight: 20,
+  },
 });

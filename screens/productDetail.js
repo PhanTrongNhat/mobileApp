@@ -3,15 +3,16 @@ import {
   StyleSheet,
   Text,
   View,
-  Button,
+  Dimensions,
   Image,
   TouchableOpacity,
   ScrollView,
 } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
-import { setCart } from "../redux/cart";
+import { setCartCount } from "../redux/cart";
 import { Icon, withBadge } from "react-native-elements";
 import { LinearGradient } from "expo-linear-gradient";
+const h = Dimensions.get("screen").height;
 export default function productDetail(props) {
   const [count, setCount] = useState(0);
   const length = useSelector((state) => state.cart.count);
@@ -24,8 +25,8 @@ export default function productDetail(props) {
 
   const addItem = () => {
     item.count = count;
-    console.log(item);
-    dispatch(setCart(item));
+    setCount(0);
+    dispatch(setCartCount(item));
   };
   const BadgedIcon = withBadge(length)(Icon);
   useLayoutEffect(() => {
@@ -59,15 +60,9 @@ export default function productDetail(props) {
         </View>
         <View style={styles.detail}>
           {src ? (
-            <Image
-              style={styles.image}
-              source={require("../assets/trousers.png")}
-            ></Image>
+            <Image style={styles.image} source={{ uri: item.image }}></Image>
           ) : (
-            <Image
-              style={styles.image}
-              source={require("../assets/trousers.png")}
-            ></Image>
+            <Image style={styles.image} source={{ uri: item.image }}></Image>
           )}
         </View>
 
@@ -75,13 +70,7 @@ export default function productDetail(props) {
         <Text style={styles.description}>Product description:</Text>
         <View style={styles.scrollView}>
           <ScrollView>
-            <Text style={styles.descriptionDetail}>
-              I am presently having this same problem but in my case, I am using
-              Expo? Please anyone with a workaround on how I solve this
-              problem?, I am presently having this same problem but in my case,
-              I am using Expo? Please anyone with a workaround on how I solve
-              this problem?
-            </Text>
+            <Text style={styles.descriptionDetail}>{item.description}</Text>
           </ScrollView>
         </View>
 
@@ -134,11 +123,11 @@ const styles = StyleSheet.create({
     alignItems: "flex-end",
   },
   scrollView: {
-    height: 80,
+    height: h * 0.13,
     marginBottom: 10,
   },
   header: {
-    marginTop: 30,
+    marginTop: 40,
     flexDirection: "row",
     justifyContent: "space-between",
     marginLeft: 20,
@@ -175,8 +164,8 @@ const styles = StyleSheet.create({
     marginLeft: 10,
   },
   image: {
-    width: 170,
-    height: 170,
+    width: h * 0.23,
+    height: h * 0.27,
 
     marginBottom: 10,
 

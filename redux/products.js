@@ -4,6 +4,7 @@ const GETDATA = "GETDATA";
 const SETSTATUS = " SETSTATUS";
 let initState = {
   products: [],
+  categoris:[]
 };
 const setDataSatus = async (data) =>
   await axios
@@ -34,7 +35,7 @@ export const setStatusProducts = (id) => {
 export const fetchData = () => async (dispatch) => {
   const res = await axios.get("https://2g8ge.sse.codesandbox.io/products");
 
-  dispatch({ type: SETDATA, payload: res.data.products });
+  dispatch({ type: SETDATA, payload: res.data });
 };
 
 const reducer = (state = initState, action) => {
@@ -44,9 +45,11 @@ const reducer = (state = initState, action) => {
         ...state,
       };
     case SETDATA:
+      
       return {
         ...state,
-        products: action.payload,
+        products: action.payload.products,
+        categoris: action.payload.categoris
       };
     case SETSTATUS:
       let arr = [...state.products];

@@ -5,16 +5,15 @@ import {
   Text,
   StyleSheet,
   TouchableOpacity,
-  Button,
+  
 } from "react-native";
 import { Icon } from "react-native-elements";
-import product from "../assets/wardrobe.png";
 export default function ({ item, onPress, onPressSetCart, onPressReduce }) {
   return (
     <TouchableOpacity activeOpacity={0.5}>
       <View style={style.container}>
         <View style={style.imageView}>
-          <Image style={style.image} source={product}></Image>
+          <Image style={style.image} source={{uri : item.image}}></Image>
         </View>
 
         <View style={style.item}>
@@ -57,7 +56,7 @@ const style = StyleSheet.create({
     margin: 10,
     height: 130,
     borderRadius: 5,
-    flex: 1,
+ 
     justifyContent: "space-around",
     flexDirection: "row",
 
@@ -73,7 +72,7 @@ const style = StyleSheet.create({
   },
   image: {
     width: 100,
-    height: 100,
+    height: 110,
   },
   text: {
     color: "red",

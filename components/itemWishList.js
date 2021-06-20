@@ -1,13 +1,13 @@
 import React from "react";
 import { View, Image, Text, StyleSheet, TouchableOpacity } from "react-native";
-import product from "../assets/wardrobe.png";
+
 import { Icon } from "react-native-elements";
 export default function ({ item, onPress }) {
   return (
     <TouchableOpacity activeOpacity={0.5}>
       <View style={style.container}>
         <View style={style.imageView}>
-          <Image style={style.image} source={product}></Image>
+          <Image style={style.image} source={{uri : item.image}}></Image>
         </View>
         <View style={style.infor}>
           <Text style={style.text}>{item.name}</Text>
