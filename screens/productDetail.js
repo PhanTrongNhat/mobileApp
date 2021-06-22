@@ -25,9 +25,14 @@ export default function productDetail(props) {
 
   const addItem = () => {
     item.count = count;
-    setCount(0);
+  
+   
     dispatch(setCartCount(item));
+    setCount(0);
   };
+  useEffect(() => {
+  
+  }, [dispatch]);
   const BadgedIcon = withBadge(length)(Icon);
   useLayoutEffect(() => {
     navigation.setOptions(

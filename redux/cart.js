@@ -39,7 +39,7 @@ export const setCart = (item) => {
 export const setCartCount = (item) => {
   return {
     type: SETCARTCOUNT,
-    payload: item,
+    payload: { ...item },
   };
 };
 export const deleteItem = (id) => {
@@ -82,41 +82,7 @@ const reducer = (state = initState, action) => {
         };
       }
     }
-    case SETCARTCOUNT: {
-      //khai báo mảng tạm và biến lưu index sản phẩm trong giỏ hàng
-      let arr, temp;
-      arr = [...state.items];
-      temp = arr.findIndex((item) => item.id === action.payload.id);
-      if (action.payload.count === 0) {
-        return {
-          ...state,
-        };
-      }
-      //kiểm tra sản phẩm tồn tại ở giỏ hàng chưa
-      if (state.count === 0 || temp === -1) {
-        //action.payload.count = 1;
-        arr.push(action.payload);
-        state.count += action.payload.count;
-        state.total += action.payload.cost * action.payload.count;
-        //storeData({ ...state, items: arr });
 
-        setData({ ...state, items: arr });
-        return {
-          ...state,
-          items: arr,
-        };
-      }
-
-      state.count = state.count + action.payload.count;
-      state.total = state.total + action.payload.cost * action.payload.count;
-
-      arr[temp].count += action.payload.count;
-      setData({ ...state, items: arr });
-      return {
-        ...state,
-        items: arr,
-      };
-    }
     case LOADDATA: {
       return {
         ...state,
@@ -126,16 +92,16 @@ const reducer = (state = initState, action) => {
 
     case SETCART: {
       //khai báo mảng tạm và biến lưu index sản phẩm trong giỏ hàng
-      let arr, temp;
-      arr = [...state.items];
+      let arr1, temp;
+      arr1 = [...state.items];
       temp = arr.findIndex((item) => item.id === action.payload.id);
-
+      console.log(state);
       //kiểm tra sản phẩm tồn tại ở giỏ hàng chưa
       if (state.count === 0 || temp === -1) {
         //cộng biến thêm 1 và update giỏ hàng
 
         action.payload.count = 1;
-        arr.push(action.payload);
+        arr1.push(action.payload);
         state.count++;
         state.total += action.payload.cost;
         //storeData({ ...state, items: arr });
@@ -146,14 +112,14 @@ const reducer = (state = initState, action) => {
         };
       } //cộng biến thêm 1 và update giỏ hàng
 
-      arr[temp].count++;
+      arr1[temp].count++;
       state.count++;
       state.total += action.payload.cost;
 
-      setData({ ...state, items: arr });
+      setData({ ...state, items: arr1 });
       return {
         ...state,
-        items: arr,
+        items: arr1,
       };
     }
 
@@ -171,7 +137,39 @@ const reducer = (state = initState, action) => {
         items: arr,
       };
     }
-
+    case SETCARTCOUNT: {
+      //khai báo mảng tạm và biến lưu index sản phẩm trong giỏ hàng
+      let arr, index;
+      arr = [...state.items];
+      index = arr.findIndex((item) => item.id === action.payload.id);
+      console.log(state);
+      //kiểm tra sản phẩm tồn tại ở giỏ hàng chưa
+      if (action.payload.count === 0) {
+        return {
+          ...state,
+        };
+      }
+      if (state.count === 0 || index === -1) {
+        //cộng biến thêm 1 và update giỏ hàng
+        arr.push(action.payload);
+        state.count += action.payload.count;
+        state.total += action.payload.count * action.payload.cost;
+        //storeData({ ...state, items: arr });
+        setData({ ...state, items: arr });
+        return {
+          ...state,
+          items: arr,
+        };
+      } //cộng biến thêm 1 và update giỏ hàng
+      arr[index].count += action.payload.count;
+      state.count += action.payload.count;
+      state.total += action.payload.cost * action.payload.count;
+      setData({ ...state, items: arr });
+      return {
+        ...state,
+        items: arr,
+      };
+    }
     default:
       return state;
   }
